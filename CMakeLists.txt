@@ -11,7 +11,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/includes)
 # Build every c file under ./src
 file(GLOB eiffelnet_src ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c)
 # Build the project
-add_compile_options(-Wall -Wextra -pedantic -Werror)
+add_compile_options(-Wall -Wextra -pedantic)
 add_library(libeiffelnet ${eiffelnet_src})
 
 
