@@ -59,11 +59,3 @@ void exemple_lecture_lycees()
   }
   fin_lecture(f);
 }
-
-int main(void)
-{
-  exemple_lecture_voeux();
-  printf("------------------\n");
-  exemple_lecture_lycees();
-  return 0;
-}
