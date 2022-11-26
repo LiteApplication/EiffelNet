@@ -1,10 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "main.h"
+#include "eiffelnet.h"
+#include "eiffelnet_debug.h"
 #include "test.h"
 
-int main(char *argv[], int argc)
+int main()
 {
+    int nb_eleves, nb_lycees;
+    struct lycee **lycees = lecture_lycees("../data/lycees.csv", &nb_lycees);
+    struct eleve **eleves = lecture_eleves("../data/voeux.csv", &nb_eleves);
+
+    printf("Nombre d'eleves: %d\n", nb_eleves);
+    printf("Nombre de lycees: %d\n", nb_lycees);
+    printf("Eleves :\n");
+    for (int i = 0; i < nb_eleves; i = i + 1)
+    {
+        print_eleve(eleves[i]);
+    }
+    printf("Lycees :\n");
+    for (int i = 0; i < nb_lycees; i = i + 1)
+    {
+        print_lycee(lycees[i]);
+    }
+
     return 0;
 }
 

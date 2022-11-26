@@ -1,4 +1,4 @@
-#include "main.h"
+#include "eiffelnet.h"
 
 int function(int a, int b)
 {
