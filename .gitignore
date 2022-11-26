@@ -1,5 +1,8 @@
-# Do not sync build files
+# Build files
 build/
 
-# Ignore VSCode-related stuff too
+# Valgrind files
+vgcore.*
+
+# VSCode-related stuff
 .vscode/
