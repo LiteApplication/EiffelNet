@@ -1,4 +1,5 @@
 # EiffelNet
+Par Martin Wattel et Alexis Rossfelder
 ## Build
 ```bash
 cmake -B build -S .
