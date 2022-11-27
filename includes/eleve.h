@@ -54,4 +54,6 @@ void add_voeu(struct eleve *eleve, struct lycee *lycee, int rang);
  */
 int eleve_comparator(const void *first, const void *second);
 
+void inverse_voeux(struct eleve* eleve);
+
 #endif // _ELEVE_H

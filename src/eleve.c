@@ -71,3 +71,12 @@ int eleve_comparator(const void *first, const void *second)
 {
     return (*(struct eleve **)second)->score - (*(struct eleve **)first)->score;
 }
+
+void inverse_voeux(struct eleve* eleve) {
+	int middle = NB_VOEUX/2;
+	for(int i = 0; i <= middle; i++) {
+		int cache = eleve->voeux[i];
+		eleve->voeux[i] = eleve->voeux[NB_VOEUX-i-1];
+		eleve->voeux[NB_VOEUX-i-1] = cache;
+	}
+}
