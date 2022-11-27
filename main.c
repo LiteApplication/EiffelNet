@@ -4,12 +4,12 @@
 #include "eiffelnet_debug.h"
 #include "test.h"
 
-int main()
+int main(void)
 {
     int nb_eleves, nb_lycees;
     struct lycee **lycees = lecture_lycees("../data/lycees.csv", &nb_lycees);
     struct eleve **eleves = lecture_eleves("../data/voeux.csv", &nb_eleves);
-
+    printf("Informations:\n\n")
     printf("Nombre d'eleves: %d\n", nb_eleves);
     printf("Nombre de lycees: %d\n", nb_lycees);
     printf("Eleves :\n");
@@ -22,8 +22,50 @@ int main()
     {
         print_lycee(lycees[i]);
     }
-
-    return 0;
+    printf("\n");
+    
+    printf("Une seule zone:\n\n");
+    struct couple_el* el = oarea_alogirthm(eleves, nb_eleves, lycees, nb_lycees);
+    int i = 0;
+    int* already_seen = malloc(sizeof(int)*nb_lycees);
+    int g = 0;
+    while(i < nb_eleves){
+    	struct lycee* lycee = el[i].lycee;
+	if(lycee == NULL) {
+	    i++;
+	    continue;
+	}
+	char in_it = 0;
+	for(int j = 0; j < nb_lycee; j++) {
+	    if(already_seen[j] == lycee->id) {
+		in_it = 1;
+		break;
+	    }
+	}
+	if(in_it) {
+	    i++;
+	    continue;
+	}
+	already_seen[g] = lycee->id;
+	g++;
+	char is_not = 0;
+	printf("Lycée n°%d\n", lycee->id);
+	printf(" -%d\n", el[i].eleve->id);
+	for(int j = i+1; j < nb_eleves; j++) {
+	    if(el[i].lycee == lycee) {
+		printf(" -%d\n", el[i].eleve->id);
+	    }else{
+		if(!is_not) {
+		    i = j;
+		    is_not = 1;
+          	}
+	    }
+	}
+    }
+    free(already_seen);
+    free_eleves(eleves);
+    free_lycees(lycees);
+    return EXIT_SUCCESS;
 }
 
 /* Main de exemple_tri */

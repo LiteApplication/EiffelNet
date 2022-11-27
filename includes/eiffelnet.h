@@ -3,7 +3,13 @@
 
 #include "lycee.h"
 #include "eleve.h"
+#include <stdlib.h>
 
-int function(int a, int b);
+struct couple_el{
+	struct eleve* eleve;
+	struct lycee* lycee;
+}
+
+struct couple_el* oarea_algorithm(struct eleve** eleves, int nb_eleves, struct lycee** lycees, int nb_lycees);
 
 #endif // _EIFFELNET_H

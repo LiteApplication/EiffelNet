@@ -1,5 +1,4 @@
 #include <assert.h>
-#include "main.h"
 
 int main()
 {
