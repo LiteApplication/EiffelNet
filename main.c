@@ -27,6 +27,9 @@ int main(void)
     printf("Une seule zone:\n\n");
     struct couple_el *el = oarea_algorithm(eleves, nb_eleves, lycees, nb_lycees, eleve_comparator);
     int i = 0;
+    for(int h = 0; h < nb_eleves; h++) {
+	printf("%d\n", el[h].eleve->id);
+    }
     int *already_seen = malloc(sizeof(int) * nb_lycees);
     int g = 0;
     while (i < nb_eleves)
@@ -58,9 +61,9 @@ int main(void)
         printf(" -%d\n", el[i].eleve->id);
         for (int j = i + 1; j < nb_eleves; j++)
         {
-            if (el[i].lycee == lycee)
+            if (el[j].lycee == lycee)
             {
-                printf(" -%d\n", el[i].eleve->id);
+                printf(" -%d\n", el[j].eleve->id);
             }
             else
             {
