@@ -1,6 +1,7 @@
 #include <assert.h>
+#include "eiffelnet.h"
 
 int main()
 {
-    assert(function(1, 2) == 3);
+    return 0;
 }

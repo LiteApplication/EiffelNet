@@ -13,6 +13,7 @@ file(GLOB eiffelnet_src ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c)
 # Build the project
 add_compile_options(-Wall -Wextra -pedantic)
 add_library(libeiffelnet ${eiffelnet_src})
+set_property(TARGET libeiffelnet PROPERTY C_STANDARD 99)
 
 
 ### TESTS ###
@@ -25,7 +26,7 @@ add_executable(eiffelnet_test ${eiffelnet_test})
 # Link the test with the project
 target_link_libraries(eiffelnet_test libeiffelnet)
 # Add the test to the test suite
-add_test(NAME eiffelnet_test COMMAND $<TARGET_FILE:eiffelnet_test>)
+add_test(NAME eiffelnet COMMAND $<TARGET_FILE:eiffelnet_test>)
 
 ### EXECUTABLE ###
 # Build main.c and link it with the project
