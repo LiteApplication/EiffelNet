@@ -9,6 +9,9 @@
 #include "eleve.h"
 #ifndef NDEBUG
 
+/** Affiche un élève
+ * @param e L'élève à afficher
+ */
 void print_eleve(struct eleve *e)
 {
     printf("\t\tEleve %d:\tScore: %d \tVoeux: ", e->id, e->score);

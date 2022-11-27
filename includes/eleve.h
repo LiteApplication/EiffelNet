@@ -6,6 +6,9 @@
 
 struct lycee; // forward declaration
 
+/**
+ * @brief Structure représentant un élève
+ */
 struct eleve
 {
     int id;
@@ -13,10 +16,42 @@ struct eleve
     int voeux[NB_VOEUX];
 };
 
+/**
+ * @brief Crée et alloue un élève
+ * @param id L'identifiant de l'élève
+ * @param score Le score de l'élève
+ * @param voeux Les voeux de l'élève dans un tableau de taille NB_VOEUX
+ * @return Un pointeur vers l'élève créé
+ */
 struct eleve *eleve_new(int id, int score, int *voeux);
+
+/**
+ * @brief la liste des élèves dans un fichier
+ * @param filename Le nom du fichier à lire
+ * @param nb_eleves Pointeur vers un entier où sera stocké le nombre d'élèves lus
+ * @return Un tableau de pointeurs vers les élèves lus
+ */
 struct eleve **lecture_eleves(char *filename, int *nb_eleves);
+
+/**
+ * @brief Libère la mémoire allouée pour un élève
+ * @param eleves Le tableau d'élèves à libérer
+ * @param nb_eleves Le nombre d'élèves dans le tableau
+ */
 void free_eleves(struct eleve **eleves, int nb_eleves);
+/**
+ * @brief Ajoute le voeu d'un élève à un lycée donné
+ * @param eleve L'élève
+ * @param lycee Le lycée
+ * @param rang Le rang du voeu de l'élève
+ */
 void add_voeu(struct eleve *eleve, struct lycee *lycee, int rang);
-int eleve_comparator(const void *e1, const void *e2);
+
+/**
+ * @brief Compare deux élèves
+ * @param first Un élève
+ * @param second Un autre élève
+ */
+int eleve_comparator(const void *first, const void *second);
 
 #endif // _ELEVE_H
