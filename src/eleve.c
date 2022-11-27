@@ -67,9 +67,10 @@ void add_voeu(struct eleve *eleve, struct lycee *lycee, int rang)
     lycee->effectif_actuel++;
 }
 
-int eleve_comparator(const void* first, const void* second) {
-	struct eleve* e1 = (const struct eleve*) first;
-	struct eleve* e2 = (const struct eleve*) second;
+int eleve_comparator(const void *first, const void *second)
+{
+    const struct eleve *e1 = (const struct eleve *)first;
+    const struct eleve *e2 = (const struct eleve *)second;
 
-	return e1->score - e2->score;
+    return e1->score - e2->score;
 }

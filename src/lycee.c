@@ -73,7 +73,7 @@ struct lycee *find_lycee(int id, struct lycee **lycees, int nb_lycees)
 
     struct lycee *lycee = NULL;
     // Il est probable que la liste des lycees soit triee par id
-    if (id < nb_lycees && lycee[id].id == id)
+    if (id < nb_lycees && lycees[id]->id == id)
         lycee = lycees[id];
     else
     {
