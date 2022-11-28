@@ -11,7 +11,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/includes)
 # Build every c file under ./src
 file(GLOB eiffelnet_src ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c)
 # Build the project
-add_compile_options(-Wall -Wextra -pedantic)
+add_compile_options(-Wall -Wextra -pedantic -g)
 add_library(libeiffelnet ${eiffelnet_src})
 set_property(TARGET libeiffelnet PROPERTY C_STANDARD 99)
 
@@ -49,6 +49,13 @@ add_custom_target(valgrind
     WORKING_DIRECTORY ${CMAKE_PROJECT_DIR}
 )
 
+
+### MAKE GENFILES ###
+# Add a make genfiles command to generate random files using the python script
+add_custom_target(genfiles
+    COMMAND python3 ${CMAKE_CURRENT_SOURCE_DIR}/tests/generate_values.py ../data/
+    WORKING_DIRECTORY ${CMAKE_PROJECT_DIR}
+)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
