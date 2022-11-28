@@ -44,10 +44,4 @@ int lecture_lycee_suivant(FILE *f, int *lycee, int *capacite);
  * POUR LE DEUXIEME RENDU
  */
 int lecture_eleve_suivant_zones(FILE *f, int *eleve, int *scores, int *lycees);
-
-/** @param f valeur recupérée grace a debut_lecture
- * @brief Détermine le nombre de lignes d'un fichier
- */
-int compte_lignes(FILE *f);
-
 #endif

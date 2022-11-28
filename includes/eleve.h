@@ -4,6 +4,8 @@
 #include "lecture.h"
 #include "lycee.h"
 
+#define NB_ELEVES 1327
+
 struct lycee; // forward declaration
 
 /**
@@ -28,10 +30,9 @@ struct eleve *eleve_new(int id, int score, int *voeux);
 /**
  * @brief la liste des élèves dans un fichier
  * @param filename Le nom du fichier à lire
- * @param nb_eleves Pointeur vers un entier où sera stocké le nombre d'élèves lus
  * @return Un tableau de pointeurs vers les élèves lus
  */
-struct eleve **lecture_eleves(char *filename, int *nb_eleves);
+struct eleve **lecture_eleves(char *filename);
 
 /**
  * @brief Libère la mémoire allouée pour un élève
@@ -54,6 +55,6 @@ void add_voeu(struct eleve *eleve, struct lycee *lycee, int rang);
  */
 int eleve_comparator(const void *first, const void *second);
 
-void inverse_voeux(struct eleve* eleve);
+void inverse_voeux(struct eleve *eleve);
 
 #endif // _ELEVE_H

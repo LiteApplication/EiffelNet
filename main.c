@@ -6,30 +6,29 @@
 
 int main(void)
 {
-    int nb_eleves, nb_lycees;
-    struct lycee **lycees = lecture_lycees("../data/lycees.csv", &nb_lycees);
-    struct eleve **eleves = lecture_eleves("../data/voeux.csv", &nb_eleves);
+    struct lycee **lycees = lecture_lycees("../data/lycees.csv");
+    struct eleve **eleves = lecture_eleves("../data/voeux.csv");
     printf("Informations:\n\n");
-    printf("Nombre d'eleves: %d\n", nb_eleves);
-    printf("Nombre de lycees: %d\n", nb_lycees);
+    printf("Nombre d'eleves: %d\n", NB_ELEVES);
+    printf("Nombre de lycees: %d\n", NB_LYCEES);
     printf("Eleves :\n");
-    for (int i = 0; i < nb_eleves; i = i + 1)
+    for (int i = 0; i < NB_ELEVES; i = i + 1)
     {
         print_eleve(eleves[i]);
     }
     printf("\n");
 
     printf("Une seule zone:\n\n");
-    struct couple_el *el = oarea_algorithm(eleves, nb_eleves, lycees, nb_lycees, eleve_comparator);
+    struct couple_el *el = oarea_algorithm(eleves, lycees, eleve_comparator);
 
     printf("Lycees :\n");
-    for (int i = 0; i < nb_lycees; i = i + 1)
+    for (int i = 0; i < NB_LYCEES; i = i + 1)
     {
         print_lycee(lycees[i]);
     }
 
     printf("Sans lycées: ");
-    for (int i = 0; i < nb_eleves; i++)
+    for (int i = 0; i < NB_ELEVES; i++)
     {
         if (el[i].lycee == NULL)
         {
@@ -38,8 +37,8 @@ int main(void)
     }
     printf("\n\n");
     free(el);
-    free_eleves(eleves, nb_eleves);
-    free_lycees(lycees, nb_lycees);
+    free_eleves(eleves, NB_ELEVES);
+    free_lycees(lycees, NB_LYCEES);
     return EXIT_SUCCESS;
 }
 

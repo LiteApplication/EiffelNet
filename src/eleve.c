@@ -23,12 +23,11 @@ struct eleve *eleve_new(int id, int score, int *voeux)
     return eleve;
 }
 
-struct eleve **lecture_eleves(char *filename, int *nb_eleves)
+struct eleve **lecture_eleves(char *filename)
 {
     int eleve, score;
     int voeux[NB_VOEUX];
 
-    *nb_eleves = 0;
     FILE *f = debut_lecture(filename);
     if (f == NULL)
     {
@@ -36,8 +35,7 @@ struct eleve **lecture_eleves(char *filename, int *nb_eleves)
         return NULL;
     }
 
-    *nb_eleves = compte_lignes(f);
-    struct eleve **eleves = malloc(*nb_eleves * sizeof(struct eleve *));
+    struct eleve **eleves = malloc(NB_ELEVES * sizeof(struct eleve *));
     if (eleves == NULL)
     {
         fprintf(stderr, "Impossible d'allouer la mémoire pour les élèves\n");
@@ -45,7 +43,7 @@ struct eleve **lecture_eleves(char *filename, int *nb_eleves)
     }
 
     int i = 0;
-    while (lecture_eleve_suivant(f, &eleve, &score, voeux) != EOF && i < *nb_eleves)
+    while (lecture_eleve_suivant(f, &eleve, &score, voeux) != EOF && i < NB_ELEVES)
     {
         eleves[i] = eleve_new(eleve, score, voeux);
         if (eleves[i] == NULL)

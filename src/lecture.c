@@ -53,19 +53,3 @@ int lecture_lycee_suivant(FILE *f, int *lycee, int *capacite)
 {
   return fscanf(f, "%d,%d", lycee, capacite);
 }
-
-int compte_lignes(FILE *f)
-{
-  int c;
-  int nb_lignes = 0;
-
-  while ((c = fgetc(f)) != EOF)
-  {
-    if (c == '\n')
-    {
-      nb_lignes = nb_lignes + 1;
-    }
-  }
-  rewind(f);
-  return nb_lignes + 1; // +1 car on compte la dernière ligne
-}

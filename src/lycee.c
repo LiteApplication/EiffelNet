@@ -28,12 +28,11 @@ struct lycee *lycee_new(int id, int effectif)
     return lycee;
 }
 
-struct lycee **lecture_lycees(char *filename, int *nb_lycees)
+struct lycee **lecture_lycees(char *filename)
 {
     int id, effectif;
     struct lycee **lycees;
 
-    *nb_lycees = 0;
     FILE *f = debut_lecture(filename);
     if (f == NULL)
     {
@@ -41,16 +40,14 @@ struct lycee **lecture_lycees(char *filename, int *nb_lycees)
         return NULL;
     }
 
-    *nb_lycees = compte_lignes(f);
-
-    lycees = (struct lycee **)malloc(*nb_lycees * sizeof(struct lycee *));
+    lycees = (struct lycee **)malloc(NB_LYCEES * sizeof(struct lycee *));
     if (lycees == NULL)
     {
         fprintf(stderr, "Erreur lors de l'allocation de la mémoire pour les lycées\n");
         return NULL;
     }
     int i = 0;
-    while (lecture_lycee_suivant(f, &id, &effectif) != EOF && i < *nb_lycees)
+    while (lecture_lycee_suivant(f, &id, &effectif) != EOF && i < NB_LYCEES)
     {
         lycees[i] = lycee_new(id, effectif);
         if (lycees[i] == NULL)
@@ -76,16 +73,16 @@ void free_lycees(struct lycee **lycee, int nb_lycees)
     free(lycee);
 }
 
-struct lycee *find_lycee(int id, struct lycee **lycees, int nb_lycees)
+struct lycee *find_lycee(int id, struct lycee **lycees)
 {
 
     struct lycee *lycee = NULL;
-    // Il est probable que la liste des lycees soit triee par id
-    if (id < nb_lycees && lycees[id]->id == id)
+    // Il est probable que la liste des lycees soit triée par id
+    if (id < NB_LYCEES && lycees[id]->id == id)
         lycee = lycees[id];
     else
-    {
-        for (int j = 0; j < nb_lycees; j++)
+    { // On prévoit quand même le cas ou elle ne l'est pas
+        for (int j = 0; j < NB_LYCEES; j++)
         {
             if (lycees[j]->id == id)
             {

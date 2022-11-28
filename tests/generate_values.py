@@ -3,23 +3,24 @@ import csv
 import sys, os
 
 NB_VOEUX = 10
-NB_LYCEES = 10
-NB_ELEVES = 50
+NB_LYCEES = 28
+NB_ELEVES = 1327
 
-MAX_EFFECTIF = 20
-MAX_SCORE = 200
+MIN_EFFECTIF = 10
+MAX_EFFECTIF = 100
+MAX_SCORE = 255
 
 used_scores = set()
 
 lycees = []
 for i in range(NB_LYCEES):
-    lycees.append((i, random.randint(2, MAX_EFFECTIF)))
+    lycees.append((i, random.randrange(MIN_EFFECTIF, MAX_EFFECTIF)))
 
 eleves = []
 for i in range(NB_ELEVES):
     score = 0
     while score == 0 or score in used_scores:
-        score = random.randint(1, MAX_SCORE)
+        score = random.randrange(1, MAX_SCORE)
     voeux = []
     available = list(range(NB_LYCEES))
     for _ in range(NB_VOEUX):

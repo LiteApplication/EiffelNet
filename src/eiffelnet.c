@@ -2,12 +2,12 @@
 #include <assert.h>
 
 // Une seule zone
-struct couple_el *oarea_algorithm(struct eleve **eleves, int nb_eleves, struct lycee **lycees, int nb_lycees, int (*eleve_comparator)(const void *, const void *))
+struct couple_el *oarea_algorithm(struct eleve **eleves, struct lycee **lycees, int (*eleve_comparator)(const void *, const void *))
 {
-	qsort(eleves, nb_eleves, sizeof(struct eleve *), eleve_comparator);
+	qsort(eleves, NB_ELEVES, sizeof(struct eleve *), eleve_comparator);
 
-	struct couple_el *el = malloc(sizeof(struct couple_el) * nb_eleves);
-	for (int i = 0; i < nb_eleves; i++)
+	struct couple_el *el = malloc(sizeof(struct couple_el) * NB_ELEVES);
+	for (int i = 0; i < NB_ELEVES; i++)
 	{
 		int j = 0;
 		int lycee_id = eleves[i]->voeux[0];
@@ -15,7 +15,7 @@ struct couple_el *oarea_algorithm(struct eleve **eleves, int nb_eleves, struct l
 		while (lycee == NULL ||
 			   (lycee->effectif_actuel == lycee->effectif && j < NB_VOEUX))
 		{
-			lycee = find_lycee(lycee_id, lycees, nb_lycees);
+			lycee = find_lycee(lycee_id, lycees);
 			lycee_id = eleves[i]->voeux[++j];
 			assert(lycee != NULL);
 		}

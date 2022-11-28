@@ -17,6 +17,6 @@ struct couple_el
  * nb_lycees: nombre de lycées dans le tableau
  * eleve_comparator: fonction de comparaison des élèves entre eux
  */
-struct couple_el *oarea_algorithm(struct eleve **eleves, int nb_eleves, struct lycee **lycees, int nb_lycees, int (*eleve_comparator)(const void *, const void *));
+struct couple_el *oarea_algorithm(struct eleve **eleves, struct lycee **lycees, int (*eleve_comparator)(const void *, const void *));
 
 #endif // _EIFFELNET_H
