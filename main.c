@@ -11,13 +11,15 @@ int main(void)
     printf("Informations:\n\n");
     printf("Nombre d'eleves: %d\n", NB_ELEVES);
     printf("Nombre de lycees: %d\n", NB_LYCEES);
-    printf("Eleves :\n");
+
+    // Uncomment this line to print the list of students
+    /* printf("Eleves :\n");
     for (int i = 0; i < NB_ELEVES; i = i + 1)
     {
         print_eleve(eleves[i]);
     }
     printf("\n");
-
+ */
     printf("Une seule zone:\n\n");
     struct couple_el *el = oarea_algorithm(eleves, lycees, eleve_comparator);
 
@@ -27,12 +29,12 @@ int main(void)
         print_lycee(lycees[i]);
     }
 
-    printf("Sans lycées: ");
+    printf("Sans lycées:\n");
     for (int i = 0; i < NB_ELEVES; i++)
     {
         if (el[i].lycee == NULL)
         {
-            printf("%d ", el[i].eleve->id);
+            print_eleve(el[i].eleve);
         }
     }
     printf("\n\n");
