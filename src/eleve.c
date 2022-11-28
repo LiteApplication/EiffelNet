@@ -76,7 +76,7 @@ void add_voeu(struct eleve *eleve, struct lycee *lycee, int rang)
 
 int eleve_comparator(const void *first, const void *second)
 {
-    return ((struct eleve *)second)->score - ((struct eleve *)first)->score;
+    return (*(struct eleve **)second)->score - (*(struct eleve **)first)->score;
 }
 
 void inverse_voeux(struct eleve *eleve)
