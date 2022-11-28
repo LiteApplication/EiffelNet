@@ -14,7 +14,7 @@
  */
 void print_eleve(struct eleve *e)
 {
-    printf("\t\tEleve %d:\tScore: %d \tVoeux: ", e->id, e->score);
+    printf("\t\tEleve %d:\tScore: %d\tVoeux: ", e->id, e->score);
     for (int i = 0; i < NB_VOEUX; i++)
     {
         printf("%d ", e->voeux[i]);
