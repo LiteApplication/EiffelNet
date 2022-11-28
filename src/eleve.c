@@ -4,7 +4,16 @@
 
 struct eleve *eleve_new(int id, int score, int *voeux)
 {
+    if (id < 0 || score < 0)
+    {
+        return NULL;
+    }
     struct eleve *eleve = malloc(sizeof(struct eleve));
+    if (eleve == NULL)
+    {
+        fprintf(stderr, "Erreur d'allocation mémoire\n");
+        return NULL;
+    }
     eleve->id = id;
     eleve->score = score;
     for (int i = 0; i < NB_VOEUX; i++)
@@ -72,11 +81,13 @@ int eleve_comparator(const void *first, const void *second)
     return (*(struct eleve **)second)->score - (*(struct eleve **)first)->score;
 }
 
-void inverse_voeux(struct eleve* eleve) {
-	int middle = NB_VOEUX/2;
-	for(int i = 0; i <= middle; i++) {
-		int cache = eleve->voeux[i];
-		eleve->voeux[i] = eleve->voeux[NB_VOEUX-i-1];
-		eleve->voeux[NB_VOEUX-i-1] = cache;
-	}
+void inverse_voeux(struct eleve *eleve)
+{
+    int middle = NB_VOEUX / 2;
+    for (int i = 0; i <= middle; i++)
+    {
+        int tmp = eleve->voeux[i];
+        eleve->voeux[i] = eleve->voeux[NB_VOEUX - i - 1];
+        eleve->voeux[NB_VOEUX - i - 1] = tmp;
+    }
 }

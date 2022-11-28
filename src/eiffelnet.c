@@ -1,4 +1,5 @@
 #include "eiffelnet.h"
+#include <assert.h>
 
 // Une seule zone
 struct couple_el *oarea_algorithm(struct eleve **eleves, int nb_eleves, struct lycee **lycees, int nb_lycees, int (*eleve_comparator)(const void *, const void *))
@@ -10,11 +11,13 @@ struct couple_el *oarea_algorithm(struct eleve **eleves, int nb_eleves, struct l
 	{
 		int j = 0;
 		int lycee_id = eleves[i]->voeux[0];
-		struct lycee *lycee = find_lycee(lycee_id, lycees, nb_lycees);
-		while (lycee->effectif_actuel == lycee->effectif && j < NB_VOEUX)
+		struct lycee *lycee = NULL; // Cannot use do...while
+		while (lycee == NULL ||
+			   lycee->effectif_actuel == lycee->effectif && j < NB_VOEUX)
 		{
-			lycee_id = eleves[i]->voeux[++j];
 			lycee = find_lycee(lycee_id, lycees, nb_lycees);
+			lycee_id = eleves[i]->voeux[++j];
+			assert(lycee != NULL);
 		}
 		if (j == NB_VOEUX)
 		{
@@ -22,6 +25,7 @@ struct couple_el *oarea_algorithm(struct eleve **eleves, int nb_eleves, struct l
 		}
 		else
 		{
+			lycee->eleves[lycee->effectif_actuel] = eleves[i];
 			lycee->effectif_actuel++;
 		}
 		el[i].lycee = lycee;

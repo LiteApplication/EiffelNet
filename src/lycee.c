@@ -4,6 +4,10 @@
 
 struct lycee *lycee_new(int id, int effectif)
 {
+    if (effectif < 0 || id < 0)
+    {
+        return NULL;
+    }
     struct lycee *lycee = malloc(sizeof(struct lycee));
     if (lycee == NULL)
         return NULL;
@@ -16,6 +20,10 @@ struct lycee *lycee_new(int id, int effectif)
     {
         free(lycee);
         return NULL;
+    }
+    for (int i = 0; i < effectif; i++)
+    {
+        lycee->eleves[i] = NULL;
     }
     return lycee;
 }
@@ -41,13 +49,13 @@ struct lycee **lecture_lycees(char *filename, int *nb_lycees)
         fprintf(stderr, "Erreur lors de l'allocation de la mémoire pour les lycées\n");
         return NULL;
     }
-
     int i = 0;
     while (lecture_lycee_suivant(f, &id, &effectif) != EOF && i < *nb_lycees)
     {
         lycees[i] = lycee_new(id, effectif);
         if (lycees[i] == NULL)
         {
+            fprintf(stderr, "Erreur lors de l'initialisation du lycee %d.", id);
             free_lycees(lycees, i);
             fin_lecture(f);
             return NULL;
