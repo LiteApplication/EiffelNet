@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "eiffelnet.h"
-#include "eiffelnet_debug.h"
+#include "output.h"
 #include "test.h"
 
 int main(void)
 {
     struct lycee **lycees = lecture_lycees("../data/lycees.csv");
     struct eleve **eleves = lecture_eleves("../data/voeux.csv");
+#ifdef PRETTY_PRINT
     printf("Informations:\n\n");
     printf("Nombre d'eleves: %d\n", NB_ELEVES);
     printf("Nombre de lycees: %d\n", NB_LYCEES);
@@ -21,8 +22,9 @@ int main(void)
     printf("\n");
  */
     printf("Une seule zone:\n\n");
+#endif
     struct couple_el *el = oarea_algorithm(eleves, lycees, eleve_comparator);
-
+#ifdef PRETTY_PRINT
     printf("Lycees :\n");
     for (int i = 0; i < NB_LYCEES; i = i + 1)
     {
@@ -37,7 +39,11 @@ int main(void)
             print_eleve(el[i].eleve);
         }
     }
-    printf("\n\n");
+    printf("\n");
+#else
+    format_result(lycees);
+
+#endif
     free(el);
     free_eleves(eleves, NB_ELEVES);
     free_lycees(lycees, NB_LYCEES);

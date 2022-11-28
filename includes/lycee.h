@@ -36,7 +36,7 @@ struct lycee **lecture_lycees(char *filename);
 void free_lycees(struct lycee **lycee, int nb_lycees);
 
 /**
- * @brief Trouve un lycée dans un tableau de lycées
+ * @brief Trouve un lycée dans un tableau de lycées (complexité constante ou linéaire en fonction de l'organisation du tableau)
  * @param id Identifiant du lycée à trouver
  * @param lycees Tableau de lycées
  * @return Un pointeur vers le lycée trouvé, NULL si non trouvé
