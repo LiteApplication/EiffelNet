@@ -12,8 +12,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/includes)
 file(GLOB eiffelnet_src ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c)
 # Build the project
 add_compile_options(-Wall -Wextra -pedantic -g)
-add_library(libeiffelnet ${eiffelnet_src})
-set_property(TARGET libeiffelnet PROPERTY C_STANDARD 99)
+add_library(efnet ${eiffelnet_src})
+set_property(TARGET efnet PROPERTY C_STANDARD 99)
 
 
 ### TESTS ###
@@ -24,14 +24,14 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/includes)
 # Build the test
 add_executable(eiffelnet_test ${eiffelnet_test})
 # Link the test with the project
-target_link_libraries(eiffelnet_test libeiffelnet)
+target_link_libraries(eiffelnet_test efnet)
 # Add the test to the test suite
 add_test(NAME eiffelnet COMMAND $<TARGET_FILE:eiffelnet_test>)
 
 ### EXECUTABLE ###
 # Build main.c and link it with the project
 add_executable(eiffelnet ${CMAKE_CURRENT_SOURCE_DIR}/main.c)
-target_link_libraries(eiffelnet libeiffelnet)
+target_link_libraries(eiffelnet efnet)
 
 ### MAKE RUN ###
 # Add a make run command to run the executable
