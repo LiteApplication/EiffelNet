@@ -8,19 +8,19 @@ NB_ELEVES = 1327
 
 MIN_EFFECTIF = 10
 MAX_EFFECTIF = 100
-MAX_SCORE = 255
-
-used_scores = set()
+MAX_SCORE = NB_ELEVES * 2
 
 lycees = []
+print("Génération des lycées ... ")
 for i in range(NB_LYCEES):
     lycees.append((i, random.randrange(MIN_EFFECTIF, MAX_EFFECTIF)))
 
 eleves = []
+print("Génération des élèves ... ")
+unused_scores = set(range(1, MAX_SCORE))
 for i in range(NB_ELEVES):
-    score = 0
-    while score == 0 or score in used_scores:
-        score = random.randrange(1, MAX_SCORE)
+    score = random.choice(list(unused_scores))
+    unused_scores.remove(score)
     voeux = []
     available = list(range(NB_LYCEES))
     for _ in range(NB_VOEUX):
@@ -29,17 +29,21 @@ for i in range(NB_ELEVES):
     eleves.append((i, score, *voeux))
 
 eleves_zones = []
+print("Génération des élèves avec zones ... ")
+unused_scores = list(range(1, MAX_SCORE * NB_VOEUX))
 for i in range(NB_ELEVES):
-    voeux = [
-        random.randrange(1, MAX_SCORE) if i % 2 else random.randrange(0, NB_LYCEES)
-        for i in range(NB_VOEUX * 2)
-    ]
+    voeux = []
+    for _ in range(NB_VOEUX):
+        voeux.append(random.choice(unused_scores))
+        unused_scores.remove(voeux[-1])
+        voeux.append(random.randrange(0, NB_LYCEES))
     eleves_zones.append((i, *voeux))
 
 os.chdir(os.path.dirname(sys.argv[1] if len(sys.argv) > 1 else "./"))
 
 
 # Write everything
+print("Écriture des fichiers ... ")
 with open("lycees.csv", "w") as f:
     for i, row in enumerate(lycees):
         csv.writer(f, lineterminator="").writerow(row)
