@@ -13,7 +13,7 @@ struct couple_el *oarea_algorithm(struct eleve **eleves, int nb_eleves, struct l
 		int lycee_id = eleves[i]->voeux[0];
 		struct lycee *lycee = NULL; // Cannot use do...while
 		while (lycee == NULL ||
-			   lycee->effectif_actuel == lycee->effectif && j < NB_VOEUX)
+			   (lycee->effectif_actuel == lycee->effectif && j < NB_VOEUX))
 		{
 			lycee = find_lycee(lycee_id, lycees, nb_lycees);
 			lycee_id = eleves[i]->voeux[++j];
