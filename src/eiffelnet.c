@@ -15,9 +15,10 @@ struct couple_el *oarea_algorithm(struct eleve **eleves, struct lycee **lycees, 
 		while (lycee == NULL ||
 			   (lycee->effectif_actuel == lycee->effectif && j < NB_VOEUX))
 		{
+			lycee_id = eleves[i]->voeux[j];
 			lycee = find_lycee(lycee_id, lycees);
-			lycee_id = eleves[i]->voeux[++j];
 			assert(lycee != NULL);
+			j++;
 		}
 		if (j == NB_VOEUX)
 		{
