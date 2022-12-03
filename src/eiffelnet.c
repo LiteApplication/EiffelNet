@@ -17,7 +17,11 @@ struct couple_el *oarea_algorithm(struct eleve **eleves, struct lycee **lycees, 
 		{
 			lycee_id = eleves[i]->voeux[j];
 			lycee = find_lycee(lycee_id, lycees);
-			assert(lycee != NULL);
+			if (lycee == NULL)
+			{
+				printf("Impossible de trouver un lycée pour l'élève %d\n", eleves[i]->id);
+				return NULL;
+			}
 			j++;
 		}
 		if (j == NB_VOEUX)

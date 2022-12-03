@@ -24,7 +24,13 @@ int main(void)
     printf("Une seule zone:\n\n");
 #endif
     struct couple_el *el = oarea_algorithm(eleves, lycees, eleve_comparator);
+    if (el == NULL)
+    {
+        printf("Erreur lors du traitement des donnees\n");
+        return 1;
+    }
 #ifdef PRETTY_PRINT
+
     printf("Lycees :\n");
     for (int i = 0; i < NB_LYCEES; i = i + 1)
     {
