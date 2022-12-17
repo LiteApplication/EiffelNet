@@ -41,12 +41,11 @@ struct eleve **lecture_eleves(char *filename);
  */
 void free_eleves(struct eleve **eleves, int nb_eleves);
 /**
- * @brief Ajoute le voeu d'un élève à un lycée donné
+ * @brief Ajoute un élève à un lycée
  * @param eleve L'élève
  * @param lycee Le lycée
- * @param rang Le rang du voeu de l'élève
  */
-void add_voeu(struct eleve *eleve, struct lycee *lycee, int rang);
+void affecte_eleve(struct eleve *eleve, struct lycee *lycee);
 
 /**
  * @brief Compare deux élèves

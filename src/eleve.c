@@ -67,9 +67,13 @@ void free_eleves(struct eleve **eleves, int nb_eleves)
     free(eleves);
 }
 
-void add_voeu(struct eleve *eleve, struct lycee *lycee, int rang)
+void affecte_eleve(struct eleve *eleve, struct lycee *lycee)
 {
-    eleve->voeux[rang] = lycee->id;
+    if (lycee->effectif_actuel >= lycee->effectif)
+    {
+        fprintf(stderr, "Erreur: le lycée %d est plein\n", lycee->id);
+        return;
+    }
     lycee->eleves[lycee->effectif_actuel] = eleve;
     lycee->effectif_actuel++;
 }
