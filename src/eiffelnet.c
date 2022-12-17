@@ -7,6 +7,13 @@ struct couple_el *oarea_algorithm(struct eleve **eleves, struct lycee **lycees, 
 	qsort(eleves, NB_ELEVES, sizeof(struct eleve *), eleve_comparator);
 
 	struct couple_el *el = malloc(sizeof(struct couple_el) * NB_ELEVES);
+	// Fill the array with NULL
+	for (int i = 0; i < NB_ELEVES; i++)
+	{
+		el[i].eleve = NULL;
+		el[i].lycee = NULL;
+	}
+
 	for (int i = 0; i < NB_ELEVES; i++)
 	{
 		int j = 0;
@@ -24,7 +31,7 @@ struct couple_el *oarea_algorithm(struct eleve **eleves, struct lycee **lycees, 
 			}
 			j++;
 		}
-		if (j == NB_VOEUX)
+		if (j == NB_VOEUX && lycee->effectif_actuel >= lycee->effectif)
 		{
 			lycee = NULL;
 		}
