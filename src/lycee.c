@@ -8,7 +8,7 @@ struct lycee *lycee_new(int id, int effectif)
     {
         return NULL;
     }
-    struct lycee *lycee = malloc(sizeof(struct lycee));
+    struct lycee *lycee = (struct lycee *)malloc(sizeof(struct lycee));
     if (lycee == NULL)
         return NULL;
 

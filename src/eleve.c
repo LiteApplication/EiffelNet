@@ -8,7 +8,7 @@ struct eleve *eleve_new(int id, int score, int *voeux)
     {
         return NULL;
     }
-    struct eleve *eleve = malloc(sizeof(struct eleve));
+    struct eleve *eleve = (struct eleve *)malloc(sizeof(struct eleve));
     if (eleve == NULL)
     {
         fprintf(stderr, "Erreur d'allocation mémoire\n");
@@ -35,7 +35,7 @@ struct eleve **lecture_eleves(char *filename)
         return NULL;
     }
 
-    struct eleve **eleves = malloc(NB_ELEVES * sizeof(struct eleve *));
+    struct eleve **eleves = (struct eleve **)malloc(NB_ELEVES * sizeof(struct eleve *));
     if (eleves == NULL)
     {
         fprintf(stderr, "Impossible d'allouer la mémoire pour les élèves\n");
