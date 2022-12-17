@@ -1,5 +1,9 @@
 # EiffelNet
 Par Martin Wattel et Alexis Rossfelder
+
+## README.md
+Ce fichier peut être visualisé en ligne sur [GitHub](https://gist.github.com/LiteApplication/34ac0ac5dce4024abc6c9fb8b5d7e417)
+
 ## Build
 ```bash
 cmake -B build -S .
@@ -8,7 +12,7 @@ make
 ```
 
 ## Tests
-Ce programme utilise la suite de test CTest de CMake. Pour lancer les tests, il suffit de lancer la commande suivante :
+Ce programme est compatible avec la suite de test CTest de CMake. Pour lancer les tests, il suffit de lancer la commande suivante :
 ```bash
 ctest
 # ou
@@ -48,6 +52,11 @@ Lycée <id>
 ```
 Pour choisir le mode d'affichage, il suffit de `#define` ou `#undef` `PRETTY_PRINT` dans le fichier [`includes/eiffelnet.h`](includes/eiffelnet.h#L8) (ligne 8). 
 
+## Commentaires
+Les commentaires de documentation sont situés dans les fichiers [`headers (.h)`](includes/).
+
+Pour une fonction particulière, une description est indiquée par `@brief <description>`, les paramètres par `@param <name> <description>` et les valeurs de retour par `@return <description>`.
+
 ## Structure du projet
 ```bash
 .
@@ -64,8 +73,8 @@ Pour choisir le mode d'affichage, il suffit de `#define` ou `#undef` `PRETTY_PRI
 ├── src # Sources et fonctions
 │   ├── eiffelnet.c
 │   ├── eleve.c
-│   ├── exemple_lecture.c
-│   ├── exemple_tri.c
+│   ├── exemple_lecture.c # Fourni par le sujet
+│   ├── exemple_tri.c # Fourni par le sujet
 │   ├── lecture.c
 │   ├── lycee.c
 │   └── output.c
