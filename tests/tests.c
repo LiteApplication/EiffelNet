@@ -32,7 +32,7 @@ int main()
     struct lycee *lycee1 = lycee_new(1, 1);
     struct lycee *lycee0 = lycee_new(0, 1);
 
-    struct lycee *lycees[NB_LYCEES];
+    struct lycee **lycees = (struct lycee **)malloc(sizeof(struct lycee *) * NB_LYCEES);
 
     lycees[0] = lycee1; // Force it to be full
     lycees[1] = lycee0; // They are not in the right order
@@ -80,7 +80,7 @@ int main()
     assert(eleve_comparator(&eleve1, &eleve1) == 0);
 
     // Create a useless list of students
-    struct eleve *eleves[NB_ELEVES];
+    struct eleve **eleves = (struct eleve **)malloc(sizeof(struct eleve *) * NB_ELEVES);
     int voeux[NB_VOEUX] = {0};
     for (int i = 0; i < NB_ELEVES; i++)
         eleves[i] = eleve_new(i, 0, voeux);
@@ -106,4 +106,9 @@ int main()
         else if (result[i].eleve == eleve2)
             assert(result[i].lycee->id == 1);
     }
+
+    /* free */
+    free_lycees(lycees, NB_LYCEES);
+    free_eleves(eleves, NB_ELEVES);
+    free(result);
 }
