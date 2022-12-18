@@ -25,8 +25,22 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/includes)
 add_executable(eiffelnet_test ${eiffelnet_test})
 # Link the test with the project
 target_link_libraries(eiffelnet_test efnet)
+# Add a "test" that builds the test executable
+add_test(
+    NAME test_build
+    COMMAND "${CMAKE_COMMAND}"
+  --build "${CMAKE_BINARY_DIR}"
+  --config "$<CONFIG>"
+  --target eiffelnet_test
+)
 # Add the test to the test suite
-add_test(NAME eiffelnet COMMAND $<TARGET_FILE:eiffelnet_test>)
+add_test(
+    NAME eiffelnet
+    COMMAND $<TARGET_FILE:eiffelnet_test>
+)
+set_tests_properties(test_build PROPERTIES FIXTURES_SETUP    test_fixture)
+set_tests_properties(eiffelnet PROPERTIES FIXTURES_REQUIRED test_fixture)
+
 
 ### EXECUTABLE ###
 # Build main.c and link it with the project
