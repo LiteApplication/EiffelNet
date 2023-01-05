@@ -33,10 +33,12 @@ print("Génération des élèves avec zones ... ")
 unused_scores = list(range(1, MAX_SCORE * NB_VOEUX))
 for i in range(NB_ELEVES):
     voeux = []
+    available = list(range(NB_LYCEES))
     for _ in range(NB_VOEUX):
+        voeux.append(random.choice(available))
+        available.remove(voeux[-1])
         voeux.append(random.choice(unused_scores))
         unused_scores.remove(voeux[-1])
-        voeux.append(random.randrange(0, NB_LYCEES))
     eleves_zones.append((i, *voeux))
 
 os.chdir(os.path.dirname(sys.argv[1] if len(sys.argv) > 1 else "./"))
