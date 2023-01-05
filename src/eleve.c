@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-struct eleve *eleve_new(int id, int score, int *voeux)
+struct eleve *eleve_new(int id, int scores[NB_VOEUX], int voeux[NB_VOEUX])
 {
-    if (id < 0 || score < 0)
+    if (id < 0)
     {
         return NULL;
     }
@@ -15,17 +15,26 @@ struct eleve *eleve_new(int id, int score, int *voeux)
         return NULL;
     }
     eleve->id = id;
-    eleve->score = score;
+    eleve->demandes = NULL;
+    for (int i = 0; i < NB_LYCEES; i++)
+    {
+        eleve->lmaillon[i] = NULL;
+        eleve->emaillon[i] = NULL;
+    }
+
     for (int i = 0; i < NB_VOEUX; i++)
     {
-        eleve->voeux[i] = voeux[i];
+        eleve->_raw_scores[i] = scores[i];
+        eleve->_raw_voeux[i] = voeux[i];
     }
+
     return eleve;
 }
 
 struct eleve **lecture_eleves(char *filename)
 {
-    int eleve, score;
+    int eleve;
+    int scores[NB_VOEUX];
     int voeux[NB_VOEUX];
 
     FILE *f = debut_lecture(filename);
@@ -43,9 +52,9 @@ struct eleve **lecture_eleves(char *filename)
     }
 
     int i = 0;
-    while (lecture_eleve_suivant(f, &eleve, &score, voeux) != EOF && i < NB_ELEVES)
+    while (lecture_eleve_suivant_zones(f, &eleve, &scores, voeux) != EOF && i < NB_ELEVES)
     {
-        eleves[i] = eleve_new(eleve, score, voeux);
+        eleves[i] = eleve_new(eleve, scores, voeux);
         if (eleves[i] == NULL)
         {
             free_eleves(eleves, i);
@@ -69,27 +78,8 @@ void free_eleves(struct eleve **eleves, int nb_eleves)
 
 void affecte_eleve(struct eleve *eleve, struct lycee *lycee)
 {
-    if (lycee->effectif_actuel >= lycee->effectif)
-    {
-        fprintf(stderr, "Erreur: le lycée %d est plein\n", lycee->id);
-        return;
-    }
-    lycee->eleves[lycee->effectif_actuel] = eleve;
-    lycee->effectif_actuel++;
-}
-
-int eleve_comparator(const void *first, const void *second)
-{
-    return (*(struct eleve **)second)->score - (*(struct eleve **)first)->score;
 }
 
 void inverse_voeux(struct eleve *eleve)
 {
-    int middle = NB_VOEUX / 2;
-    for (int i = 0; i <= middle; i++)
-    {
-        int tmp = eleve->voeux[i];
-        eleve->voeux[i] = eleve->voeux[NB_VOEUX - i - 1];
-        eleve->voeux[NB_VOEUX - i - 1] = tmp;
-    }
 }

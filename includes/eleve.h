@@ -1,10 +1,11 @@
 #ifndef _ELEVE_H
 #define _ELEVE_H
 
-#include "lecture.h"
 #include "lycee.h"
+#include "lecture.h"
 
 #define NB_ELEVES 1327
+#define NB_LYCEES 28
 
 struct lycee; // forward declaration
 
@@ -14,8 +15,11 @@ struct lycee; // forward declaration
 struct eleve
 {
     int id;
-    int score;
-    int voeux[NB_VOEUX];
+    int _raw_scores[NB_VOEUX];
+    int _raw_voeux[NB_VOEUX];
+    struct lvoeux *demandes;            // liste des voeux de l'eleve par ordre decroissant de preference
+    struct lvoeux *lmaillon[NB_LYCEES]; // acces direct au maillon de chaque lycee demande dans la liste du lycee;
+    struct lvoeux *emaillon[NB_LYCEES]; // acces direct au maillon de chaque lycee demande dans la liste de l'eleve
 };
 
 /**
@@ -25,7 +29,7 @@ struct eleve
  * @param voeux Les voeux de l'élève dans un tableau de taille NB_VOEUX
  * @return Un pointeur vers l'élève créé
  */
-struct eleve *eleve_new(int id, int score, int *voeux);
+struct eleve *eleve_new(int id, int scores[NB_VOEUX], int voeux[NB_VOEUX]);
 
 /**
  * @brief la liste des élèves dans un fichier
@@ -46,13 +50,6 @@ void free_eleves(struct eleve **eleves, int nb_eleves);
  * @param lycee Le lycée
  */
 void affecte_eleve(struct eleve *eleve, struct lycee *lycee);
-
-/**
- * @brief Compare deux élèves
- * @param first Un élève
- * @param second Un autre élève
- */
-int eleve_comparator(const void *first, const void *second);
 
 void inverse_voeux(struct eleve *eleve);
 

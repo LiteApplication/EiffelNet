@@ -3,14 +3,11 @@
 
 #include "eleve.h"
 
-#define NB_LYCEES 28
-
 struct lycee
 {
     int id;
-    int effectif;
-    struct eleve **eleves;
-    int effectif_actuel; // Nombre d'élèves dans le tableau
+    int capacite;             // nombre de places
+    struct lvoeux *candidats; // liste des voeux sur ce lycee par ordre decroissant de score pour ce lycee
 };
 
 /**

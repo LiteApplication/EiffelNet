@@ -1,10 +1,11 @@
 #include "lycee.h"
 #include "lecture.h"
+#include "voeux.h"
 #include <stdlib.h>
 
-struct lycee *lycee_new(int id, int effectif)
+struct lycee *lycee_new(int id, int capacite)
 {
-    if (effectif < 0 || id < 0)
+    if (capacite < 0 || id < 0)
     {
         return NULL;
     }
@@ -13,18 +14,8 @@ struct lycee *lycee_new(int id, int effectif)
         return NULL;
 
     lycee->id = id;
-    lycee->effectif = effectif;
-    lycee->effectif_actuel = 0;
-    lycee->eleves = (struct eleve **)malloc(effectif * sizeof(struct eleve *));
-    if (lycee->eleves == NULL)
-    {
-        free(lycee);
-        return NULL;
-    }
-    for (int i = 0; i < effectif; i++)
-    {
-        lycee->eleves[i] = NULL;
-    }
+    lycee->capacite = capacite;
+    lycee->candidats = NULL;
     return lycee;
 }
 
@@ -67,7 +58,7 @@ void free_lycees(struct lycee **lycee, int nb_lycees)
 {
     for (int i = 0; i < nb_lycees; i++)
     {
-        free(lycee[i]->eleves);
+        free_lvoeux(lycee[i]->candidats);
         free(lycee[i]);
     }
     free(lycee);

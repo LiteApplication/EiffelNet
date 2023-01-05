@@ -23,7 +23,7 @@ int main(void)
  */
     printf("Une seule zone:\n\n");
 #endif
-    struct couple_el *el = oarea_algorithm(eleves, lycees, eleve_comparator);
+    struct couple_el *el = marea_algorithm(eleves, lycees);
     if (el == NULL)
     {
         printf("Erreur lors du traitement des donnees\n");
