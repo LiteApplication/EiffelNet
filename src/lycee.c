@@ -89,3 +89,31 @@ struct lycee *find_lycee(int id, struct lycee **lycees)
     }
     return lycee;
 }
+
+void supprime_eleve(struct eleve *eleve, struct lycee *lycee)
+{
+    struct lvoeux *lvoeux = lycee->candidats;
+    struct lvoeux *prec = NULL;
+    while (lvoeux != NULL)
+    {
+        if (lvoeux->v->eleve == eleve)
+        {
+            if (prec == NULL)
+            {
+                lycee->candidats = lvoeux->suiv;
+                if (lycee->candidats != NULL)
+                    lycee->candidats->prec = NULL;
+            }
+            else
+            {
+                prec->suiv = lvoeux->suiv;
+                prec->suiv->prec = prec;
+            }
+            free(lvoeux->v);
+            free(lvoeux);
+            break;
+        }
+        prec = lvoeux;
+        lvoeux = lvoeux->suiv;
+    }
+}

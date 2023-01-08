@@ -10,18 +10,18 @@ int main()
 
     /* eleve_new */
     int voeux1[NB_VOEUX] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
-    int voeux2[NB_VOEUX] = {1, 4, 0, 13, 29, 3, 5, 7, 9, 1};
-    struct eleve *eleve1 = eleve_new(1, 10, voeux1);
-    struct eleve *eleve2 = eleve_new(2, 20, voeux2);
-    test_fail = eleve_new(-1, 10, voeux1);
-    assert(test_fail == NULL);
-    test_fail = eleve_new(1, -1, voeux1);
+    int scores1[NB_VOEUX] = {10, 1, 2, 3, 4, 5, 6, 7, 8, 15};
+    int voeux2[NB_VOEUX] = {1, 2, 0, 13, 29, 3, 5, 7, 9, 1};
+    int scores2[NB_VOEUX] = {9, 12, 20, 30, 40, 50, 60, 70, 80, 9};
+    struct eleve *eleve1 = eleve_new(1, scores1, voeux1);
+    struct eleve *eleve2 = eleve_new(2, scores2, voeux2);
+    test_fail = eleve_new(-1, scores1, voeux1);
     assert(test_fail == NULL);
 
     assert(eleve1->id == 1);
-    assert(eleve1->score == 10);
+    assert(eleve1->_raw_scores[0] == 10);
     assert(eleve2->id == 2);
-    assert(eleve2->score == 20);
+    assert(eleve2->_raw_scores[0] == 20);
     for (int i = 0; i < NB_VOEUX; i++)
     {
         assert(eleve1->voeux[i] == voeux1[i]);

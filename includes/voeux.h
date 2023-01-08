@@ -13,9 +13,18 @@ struct voeu
 
 struct lvoeux
 {
-    struct voeu v;
+    struct voeu *v;
     struct lvoeux *prec, *suiv;
 };
+
+/**
+ * @brief Crée et alloue un voeu
+ * @param score Le score du voeu
+ * @param eleve L'élève du voeu
+ * @param lycee Le lycée du voeu
+ * @return Un pointeur vers le voeu créé
+ */
+struct voeu *voeu_new(int score, struct eleve *eleve, struct lycee *lycee);
 
 /**
  * @brief Free une liste de voeux (dans le sens de suiv)
