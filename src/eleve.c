@@ -1,8 +1,9 @@
 #include "eleve.h"
+#include "voeux.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-struct eleve *eleve_new(int id, int scores[NB_VOEUX], int voeux[NB_VOEUX])
+struct eleve *eleve_new(int id, int scores[NB_VOEUX], int voeux[NB_VOEUX], struct lycee **lycees)
 {
     if (id < 0)
     {
@@ -15,23 +16,16 @@ struct eleve *eleve_new(int id, int scores[NB_VOEUX], int voeux[NB_VOEUX])
         return NULL;
     }
     eleve->id = id;
-    eleve->demandes = NULL;
-    for (int i = 0; i < NB_LYCEES; i++)
-    {
-        eleve->lmaillon[i] = NULL;
-        eleve->emaillon[i] = NULL;
+    eleve->voeux = malloc(sizeof(struct voeu)*NB_VOEUX);
+    for(int i = 0; i < NB_VOEUX; i++) {
+	    struct lycee* lycee = find_lycee(lycees, voeux[i]);
+	    struct voeu* voeu = create_voeu(scores[i], eleve, lycee);
+	    eleve->voeux[i] = voeu;
     }
-
-    for (int i = 0; i < NB_VOEUX; i++)
-    {
-        eleve->_raw_scores[i] = scores[i];
-        eleve->_raw_voeux[i] = voeux[i];
-    }
-
-    return eleve;
+	
 }
 
-struct eleve **lecture_eleves(char *filename)
+struct eleve **lecture_eleves(char *filename, struct lycee **lycees)
 {
     int eleve;
     int scores[NB_VOEUX];
@@ -54,7 +48,7 @@ struct eleve **lecture_eleves(char *filename)
     int i = 0;
     while (lecture_eleve_suivant_zones(f, &eleve, &scores, voeux) != EOF && i < NB_ELEVES)
     {
-        eleves[i] = eleve_new(eleve, scores, voeux);
+        eleves[i] = eleve_new(eleve, scores, voeux, lycees);
         if (eleves[i] == NULL)
         {
             free_eleves(eleves, i);
@@ -70,16 +64,24 @@ struct eleve **lecture_eleves(char *filename)
 void free_eleves(struct eleve **eleves, int nb_eleves)
 {
     for (int i = 0; i < nb_eleves; i++)
-    {
-        free(eleves[i]);
+    {	
+	struct eleve* eleve = eleves[i];
+	for(int j = 0; j < NB_VOEUX; j++) {
+		free(eleve->voeux[j]);
+	}
+	free(eleve->voeux);
+        free(eleve);
     }
     free(eleves);
 }
 
-void affecte_eleve(struct eleve *eleve, struct lycee *lycee)
-{
-}
-
 void inverse_voeux(struct eleve *eleve)
 {
+	struct voeu** voeux = eleve->voeux;
+	for(int i = 0; i < NB_VOEUX/2; i++) {
+		struct voeu* voeu = voeux[NB_VOEUX-i-1];
+		voeux[NB_VOEUX-i-1] = voeux[i];
+		voeux[i] = voeu;
+	}
+	
 }

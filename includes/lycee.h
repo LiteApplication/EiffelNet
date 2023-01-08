@@ -6,8 +6,10 @@
 struct lycee
 {
     int id;
-    int capacite;             // nombre de places
+    int capacite;    // nombre de places
+    int capacite_actuel;
     struct lvoeux *candidats; // liste des voeux sur ce lycee par ordre decroissant de score pour ce lycee
+    struct lvoeux *candidats_top;
 };
 
 /**
@@ -39,5 +41,7 @@ void free_lycees(struct lycee **lycee, int nb_lycees);
  * @return Un pointeur vers le lycée trouvé, NULL si non trouvé
  */
 struct lycee *find_lycee(int id, struct lycee **lycees);
+
+void inverse_candidats(struct eleve **eleves);
 
 #endif // _LYCEE_H

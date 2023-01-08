@@ -16,6 +16,7 @@ struct lycee *lycee_new(int id, int capacite)
     lycee->id = id;
     lycee->capacite = capacite;
     lycee->candidats = NULL;
+    lycee->candidats_top = NULL;
     return lycee;
 }
 
@@ -88,4 +89,39 @@ struct lycee *find_lycee(int id, struct lycee **lycees)
         return NULL;
     }
     return lycee;
+}
+
+void inverse_candidats(struct eleve **eleves) {
+	for(int i = 0; i < NB_ELEVES; i++) {
+		for(int j = 0; j < NB_VOEUX; j++) {
+			struct voeu *voeu = eleves[i]->voeux[j];
+			struct lycee *lycee = voeu->lycee;
+			if(lycee->candidats == NULL) {
+				lycee->candidats = create_lvoeux(voeu);
+				lycee->candidats_top = lycee->candidats;
+				continue;
+			}
+			struct lvoeux *top = lycee->candidats_top;
+			struct lvoeux *top_alt = top;
+			while(top != NULL && voeu->score > top->voeu->score) {
+				top_alt = top;
+				top = top->prec;
+			}
+			struct lvoeux *n_lvoeux = malloc(sizeof(struct lvoeux));
+			n_lvoeux->voeu = voeu;
+			if(top == NULL) {
+				top_alt->prec = n_lvoeux;
+				n_lvoeux->suiv = top_alt;
+				lycee->candidats = n_lvoeux;
+			} else {
+				top->suiv = n_lvoeux;
+				n_lvoeux->prec = top;
+				n_lvoeux->suiv = top_alt;
+				top_alt->prec = n_lvoeux;
+			}
+			if(top != lycee->candidats_top) {
+				lycee->candidats_top = n_lvoeux;
+			}
+		}
+	}
 }

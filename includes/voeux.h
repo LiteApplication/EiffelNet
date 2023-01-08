@@ -13,9 +13,11 @@ struct voeu
 
 struct lvoeux
 {
-    struct voeu v;
+    struct voeu *voeu;
     struct lvoeux *prec, *suiv;
-};
+}; 
+
+struct lvoeux* create_lvoeux(struct voeu* voeu);
 
 /**
  * @brief Free une liste de voeux (dans le sens de suiv)
