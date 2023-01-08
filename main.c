@@ -32,6 +32,18 @@ int main(void)
 			voeu = voeu->suiv;
 		}
 	}
+
+	marea_algorithm(lycees);
+	for(int i = 0; i < NB_LYCEES; i++) {
+                struct lycee *lycee = lycees[i];
+                printf("- %d\n", lycee->id);
+                struct lvoeux *voeu = lycee->candidats;
+                while(voeu != NULL) {
+                        printf("\t%d\n", voeu->voeu->eleve->id);
+                        voeu = voeu->suiv;
+                }
+        }
+
 	return EXIT_SUCCESS;
 }
 
