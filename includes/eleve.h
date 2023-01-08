@@ -54,6 +54,6 @@ void free_eleves(struct eleve **eleves, int nb_eleves);
  */
 void affecte_eleve(struct eleve *eleve, struct lycee *lycee);
 
-void inverse_voeux(struct eleve *eleve);
+void inverse_voeux(struct eleve **eleves);
 
 #endif // _ELEVE_H

@@ -6,7 +6,33 @@
 
 int main(void)
 {
-    return EXIT_SUCCESS;
+	struct lycee **lycees = lecture_lycees("../data/lycees.csv");
+	struct eleve **eleves = lecture_eleves("../data/voeux_zones.csv", lycees);
+	
+	inverse_voeux(eleves);
+
+	for(int i = 0; i < NB_ELEVES; i++) {
+		struct eleve *eleve = eleves[i];
+		printf("- %d\n", eleve->id);
+		for(int j = 0; j < NB_VOEUX; j++) {
+			struct voeu* voeu = eleve->voeux[j];
+			printf("\t- Lycee: %d, Score: %d\n", voeu->lycee->id, voeu->score);
+		}
+	}
+	struct voeu* voeu = malloc(sizeof(voeu));
+	create_lvoeux(voeu);
+	printf("\n\n");
+	inverse_candidats(eleves);
+	for(int i = 0; i < NB_LYCEES; i++) {
+		struct lycee *lycee = lycees[i];
+		printf("- %d\n", lycee->id);
+		struct lvoeux *voeu = lycee->candidats;
+		while(voeu != NULL) {
+			printf("\t%d\n", voeu->voeu->score);
+			voeu = voeu->suiv;
+		}
+	}
+	return EXIT_SUCCESS;
 }
 
 /* Main de exemple_tri */

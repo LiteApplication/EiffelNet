@@ -95,32 +95,33 @@ void inverse_candidats(struct eleve **eleves) {
 	for(int i = 0; i < NB_ELEVES; i++) {
 		for(int j = 0; j < NB_VOEUX; j++) {
 			struct voeu *voeu = eleves[i]->voeux[j];
+			printf("%d\n", voeu->score);
 			struct lycee *lycee = voeu->lycee;
+			struct lvoeux *n_lvoeux = create_lvoeux(voeu);
 			if(lycee->candidats == NULL) {
-				lycee->candidats = create_lvoeux(voeu);
-				lycee->candidats_top = lycee->candidats;
+				lycee->candidats = n_lvoeux;
 				continue;
 			}
-			struct lvoeux *top = lycee->candidats_top;
-			struct lvoeux *top_alt = top;
-			while(top != NULL && voeu->score > top->voeu->score) {
-				top_alt = top;
-				top = top->prec;
+			
+			struct lvoeux *ptr = lycee->candidats;
+			struct lvoeux *ptr_alt = NULL;
+			while(ptr != NULL && voeu->score < ptr->voeu->score) {
+				ptr_alt = ptr;
+				ptr = ptr->suiv;
 			}
-			struct lvoeux *n_lvoeux = malloc(sizeof(struct lvoeux));
-			n_lvoeux->voeu = voeu;
-			if(top == NULL) {
-				top_alt->prec = n_lvoeux;
-				n_lvoeux->suiv = top_alt;
-				lycee->candidats = n_lvoeux;
+			
+			if(ptr == NULL) {
+				ptr_alt->suiv = n_lvoeux;
+				n_lvoeux->prec = ptr_alt;
 			} else {
-				top->suiv = n_lvoeux;
-				n_lvoeux->prec = top;
-				n_lvoeux->suiv = top_alt;
-				top_alt->prec = n_lvoeux;
-			}
-			if(top != lycee->candidats_top) {
-				lycee->candidats_top = n_lvoeux;
+				if(ptr_alt != NULL) {
+					ptr_alt->suiv = n_lvoeux;
+					n_lvoeux->prec = ptr_alt;
+				}else {
+					lycee->candidats = n_lvoeux;
+				}
+				ptr->prec = n_lvoeux;
+				n_lvoeux->suiv = ptr;
 			}
 		}
 	}

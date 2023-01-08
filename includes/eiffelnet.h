@@ -3,6 +3,7 @@
 
 #include "lycee.h"
 #include "eleve.h"
+#include "voeux.h"
 #include <stdlib.h>
 
 #undef PRETTY_PRINT

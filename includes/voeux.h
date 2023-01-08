@@ -17,6 +17,8 @@ struct lvoeux
     struct lvoeux *prec, *suiv;
 }; 
 
+struct voeu* create_voeu(int score, struct eleve *eleve, struct lycee *lycee);
+
 struct lvoeux* create_lvoeux(struct voeu* voeu);
 
 /**

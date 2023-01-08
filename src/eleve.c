@@ -18,11 +18,11 @@ struct eleve *eleve_new(int id, int scores[NB_VOEUX], int voeux[NB_VOEUX], struc
     eleve->id = id;
     eleve->voeux = malloc(sizeof(struct voeu)*NB_VOEUX);
     for(int i = 0; i < NB_VOEUX; i++) {
-	    struct lycee* lycee = find_lycee(lycees, voeux[i]);
+	    struct lycee* lycee = find_lycee(voeux[i], lycees);
 	    struct voeu* voeu = create_voeu(scores[i], eleve, lycee);
 	    eleve->voeux[i] = voeu;
     }
-	
+    return eleve;	
 }
 
 struct eleve **lecture_eleves(char *filename, struct lycee **lycees)
@@ -46,7 +46,7 @@ struct eleve **lecture_eleves(char *filename, struct lycee **lycees)
     }
 
     int i = 0;
-    while (lecture_eleve_suivant_zones(f, &eleve, &scores, voeux) != EOF && i < NB_ELEVES)
+    while (lecture_eleve_suivant_zones(f, &eleve, scores, voeux) != EOF && i < NB_ELEVES)
     {
         eleves[i] = eleve_new(eleve, scores, voeux, lycees);
         if (eleves[i] == NULL)
@@ -75,13 +75,15 @@ void free_eleves(struct eleve **eleves, int nb_eleves)
     free(eleves);
 }
 
-void inverse_voeux(struct eleve *eleve)
+void inverse_voeux(struct eleve **eleves)
 {
-	struct voeu** voeux = eleve->voeux;
-	for(int i = 0; i < NB_VOEUX/2; i++) {
-		struct voeu* voeu = voeux[NB_VOEUX-i-1];
-		voeux[NB_VOEUX-i-1] = voeux[i];
-		voeux[i] = voeu;
+	for(int j = 0; j < NB_ELEVES; j++) {
+		struct voeu** voeux = eleves[j]->voeux;
+		for(int i = 0; i < NB_VOEUX/2; i++) {
+			struct voeu* voeu = voeux[NB_VOEUX-i-1];
+			voeux[NB_VOEUX-i-1] = voeux[i];
+			voeux[i] = voeu;
+		}
 	}
 	
 }
