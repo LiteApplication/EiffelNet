@@ -50,9 +50,24 @@ void free_eleves(struct eleve **eleves, int nb_eleves);
 /**
  * @brief Ajoute un élève à un lycée
  * @param eleve L'élève
+ * @param lycees La liste des lycées
+ * @param position Position du voeu dans la liste des voeux de l'élève
+ */
+void affecte_eleve(struct eleve *eleve, struct lycee **lycees, int position);
+
+/**
+ * @brief Place tous les élèves dans les lycées demandés et organise les voeux.
+ * @param eleves La liste des élèves
+ * @param lycees La liste des lycées
+ */
+void place_eleves(struct eleve **eleves, struct lycee **lycees);
+
+/**
+ * @brief Supprime les voeux à partir d'un lycée et retire l'élève des lycées suivants
+ * @param eleve L'élève
  * @param lycee Le lycée
  */
-void affecte_eleve(struct eleve *eleve, struct lycee *lycee);
+void supprime_voeux(struct eleve *eleve, struct lycee *lycee);
 
 void inverse_voeux(struct eleve **eleves);
 

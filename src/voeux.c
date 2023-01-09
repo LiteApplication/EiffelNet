@@ -1,12 +1,19 @@
 #include "voeux.h"
 #include <stdlib.h>
 
-struct voeu* create_voeu(int score, struct eleve* eleve, struct lycee *lycee) {
-	struct voeu* voeu = malloc(sizeof(struct voeu));
-	voeu->score = score;
-	voeu->eleve = eleve;
-	voeu->lycee= lycee;
-	return voeu;
+struct voeu *voeu_new(int score, struct eleve *eleve, struct lycee *lycee)
+{
+    if (score < 0 || eleve == NULL || lycee == NULL)
+        return NULL;
+
+    struct voeu *v = (struct voeu *)malloc(sizeof(struct voeu));
+    if (v == NULL)
+        return NULL;
+
+    v->score = score;
+    v->eleve = eleve;
+    v->lycee = lycee;
+    return v;
 }
 
 struct lvoeux* create_lvoeux(struct voeu* voeu) {

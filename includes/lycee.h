@@ -42,6 +42,13 @@ void free_lycees(struct lycee **lycee, int nb_lycees);
  */
 struct lycee *find_lycee(int id, struct lycee **lycees);
 
+
 void inverse_candidats(struct eleve **eleves);
+/**
+ * @brief Supprime un élève d'un lycée
+ * @param eleve L'élève à supprimer
+ * @param lycee Le lycée
+ */
+void supprime_eleve(struct eleve *eleve, struct lycee *lycee);
 
 #endif // _LYCEE_H
