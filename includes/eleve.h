@@ -15,14 +15,13 @@ struct lycee; // forward declaration
 struct eleve
 {
     int id;
-    struct voeu** voeux;
-    /*
+    struct voeu **voeux;
+
     int _raw_scores[NB_VOEUX];
     int _raw_voeux[NB_VOEUX];
     struct lvoeux *demandes;            // liste des voeux de l'eleve par ordre decroissant de preference
     struct lvoeux *lmaillon[NB_LYCEES]; // acces direct au maillon de chaque lycee demande dans la liste du lycee;
     struct lvoeux *emaillon[NB_LYCEES]; // acces direct au maillon de chaque lycee demande dans la liste de l'eleve
-    */
 };
 
 /**

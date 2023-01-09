@@ -5,8 +5,8 @@
 
 // exemple d'utilisation des fonctions de lecture.c
 // gcc -g -Wall -Wno-unused -pedantic -Wextra -std=c11 -Wreturn-type lecture.c exemple_lecture.c -o exemple_lecture
-//#lecture.c
-//#libs: -I../includes
+// #lecture.c
+// #libs: -I../includes
 void exemple_lecture_voeux()
 {
   FILE *f = debut_lecture("../data/voeux.csv");

@@ -15,9 +15,9 @@ struct lvoeux
 {
     struct voeu *voeu;
     struct lvoeux *prec, *suiv;
-}; 
+};
 
-struct lvoeux* create_lvoeux(struct voeu* voeu);
+struct lvoeux *create_lvoeux(struct voeu *voeu);
 
 /**
  * @brief Crée et alloue un voeu
