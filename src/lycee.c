@@ -16,6 +16,7 @@ struct lycee *lycee_new(int id, int capacite)
     lycee->id = id;
     lycee->capacite = capacite;
     lycee->candidats = NULL;
+    lycee->candidats_top = NULL;
     return lycee;
 }
 
@@ -90,13 +91,60 @@ struct lycee *find_lycee(int id, struct lycee **lycees)
     return lycee;
 }
 
+void inverse_candidats(struct eleve **eleves)
+{
+    for (int i = 0; i < NB_ELEVES; i++)
+    {
+        for (int j = 0; j < NB_VOEUX; j++)
+        {
+            struct voeu *voeu = eleves[i]->voeux[j];
+            printf("%d\n", voeu->score);
+            struct lycee *lycee = voeu->lycee;
+            struct lvoeux *n_lvoeux = create_lvoeux(voeu);
+            if (lycee->candidats == NULL)
+            {
+                lycee->candidats = n_lvoeux;
+                continue;
+            }
+
+            struct lvoeux *ptr = lycee->candidats;
+            struct lvoeux *ptr_alt = NULL;
+            while (ptr != NULL && voeu->score < ptr->voeu->score)
+            {
+                ptr_alt = ptr;
+                ptr = ptr->suiv;
+            }
+
+            if (ptr == NULL)
+            {
+                ptr_alt->suiv = n_lvoeux;
+                n_lvoeux->prec = ptr_alt;
+            }
+            else
+            {
+                if (ptr_alt != NULL)
+                {
+                    ptr_alt->suiv = n_lvoeux;
+                    n_lvoeux->prec = ptr_alt;
+                }
+                else
+                {
+                    lycee->candidats = n_lvoeux;
+                }
+                ptr->prec = n_lvoeux;
+                n_lvoeux->suiv = ptr;
+            }
+        }
+    }
+}
+
 void supprime_eleve(struct eleve *eleve, struct lycee *lycee)
 {
     struct lvoeux *lvoeux = lycee->candidats;
     struct lvoeux *prec = NULL;
     while (lvoeux != NULL)
     {
-        if (lvoeux->v->eleve == eleve)
+        if (lvoeux->voeu->eleve == eleve)
         {
             if (prec == NULL)
             {
@@ -109,7 +157,7 @@ void supprime_eleve(struct eleve *eleve, struct lycee *lycee)
                 prec->suiv = lvoeux->suiv;
                 prec->suiv->prec = prec;
             }
-            free(lvoeux->v);
+            free(lvoeux->voeu);
             free(lvoeux);
             break;
         }

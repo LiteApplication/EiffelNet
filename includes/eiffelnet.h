@@ -3,6 +3,7 @@
 
 #include "lycee.h"
 #include "eleve.h"
+#include "voeux.h"
 #include <stdlib.h>
 
 #undef PRETTY_PRINT
@@ -20,6 +21,6 @@ struct couple_el
  * @param lycees: tableau de lycées
  * @param nb_lycees: nombre de lycées dans le tableau
  */
-struct couple_el *marea_algorithm(struct eleve **eleves, struct lycee **lycees);
+void marea_algorithm(struct lycee **lycees);
 
 #endif // _EIFFELNET_H

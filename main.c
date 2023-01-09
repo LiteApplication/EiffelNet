@@ -6,54 +6,45 @@
 
 int main(void)
 {
-    struct lycee **lycees = lecture_lycees("../data/lycees.csv");
-    struct eleve **eleves = lecture_eleves("../data/voeux.csv");
-#ifdef PRETTY_PRINT
-    printf("Informations:\n\n");
-    printf("Nombre d'eleves: %d\n", NB_ELEVES);
-    printf("Nombre de lycees: %d\n", NB_LYCEES);
+	struct lycee **lycees = lecture_lycees("../data/lycees.csv");
+	struct eleve **eleves = lecture_eleves("../data/voeux_zones.csv", lycees);
+	
+	inverse_voeux(eleves);
 
-    // Uncomment this line to print the list of students
-    /* printf("Eleves :\n");
-    for (int i = 0; i < NB_ELEVES; i = i + 1)
-    {
-        print_eleve(eleves[i]);
-    }
-    printf("\n");
- */
-    printf("Une seule zone:\n\n");
-#endif
-    struct couple_el *el = marea_algorithm(eleves, lycees);
-    if (el == NULL)
-    {
-        printf("Erreur lors du traitement des donnees\n");
-        return 1;
-    }
-#ifdef PRETTY_PRINT
+	for(int i = 0; i < NB_ELEVES; i++) {
+		struct eleve *eleve = eleves[i];
+		printf("- %d\n", eleve->id);
+		for(int j = 0; j < NB_VOEUX; j++) {
+			struct voeu* voeu = eleve->voeux[j];
+			printf("\t- Lycee: %d, Score: %d\n", voeu->lycee->id, voeu->score);
+		}
+	}
+	struct voeu* voeu = malloc(sizeof(voeu));
+	create_lvoeux(voeu);
+	printf("\n\n");
+	inverse_candidats(eleves);
+	for(int i = 0; i < NB_LYCEES; i++) {
+		struct lycee *lycee = lycees[i];
+		printf("- %d\n", lycee->id);
+		struct lvoeux *voeu = lycee->candidats;
+		while(voeu != NULL) {
+			printf("\t%d\n", voeu->voeu->score);
+			voeu = voeu->suiv;
+		}
+	}
 
-    printf("Lycees :\n");
-    for (int i = 0; i < NB_LYCEES; i = i + 1)
-    {
-        print_lycee(lycees[i]);
-    }
-
-    printf("Sans lycées:\n");
-    for (int i = 0; i < NB_ELEVES; i++)
-    {
-        if (el[i].lycee == NULL)
-        {
-            print_eleve(el[i].eleve);
+	marea_algorithm(lycees);
+	for(int i = 0; i < NB_LYCEES; i++) {
+                struct lycee *lycee = lycees[i];
+                printf("- %d\n", lycee->id);
+                struct lvoeux *voeu = lycee->candidats;
+                while(voeu != NULL) {
+                        printf("\t%d\n", voeu->voeu->eleve->id);
+                        voeu = voeu->suiv;
+                }
         }
-    }
-    printf("\n");
-#else
-    format_result(lycees);
 
-#endif
-    free(el);
-    free_eleves(eleves, NB_ELEVES);
-    free_lycees(lycees, NB_LYCEES);
-    return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }
 
 /* Main de exemple_tri */

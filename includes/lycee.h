@@ -6,10 +6,13 @@
 struct lycee
 {
     int id;
-    int capacite;             // nombre de places
+    int capacite; // nombre de places
+    int capacite_actuel;
     struct lvoeux *candidats; // liste des voeux sur ce lycee par ordre decroissant de score pour ce lycee
+    struct lvoeux *candidats_top;
 };
 
+struct eleve;
 /**
  * @brief Crée un nouveau lycée
  * @param id L'identifiant du lycée
@@ -40,6 +43,7 @@ void free_lycees(struct lycee **lycee, int nb_lycees);
  */
 struct lycee *find_lycee(int id, struct lycee **lycees);
 
+void inverse_candidats(struct eleve **eleves);
 /**
  * @brief Supprime un élève d'un lycée
  * @param eleve L'élève à supprimer
