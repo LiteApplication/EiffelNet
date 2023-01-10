@@ -3,6 +3,7 @@
 
 #include "lycee.h"
 #include "lecture.h"
+#include <stdbool.h>
 
 #define NB_ELEVES 1327
 #define NB_LYCEES 28
@@ -15,7 +16,6 @@ struct lycee; // forward declaration
 struct eleve
 {
     int id;
-    struct voeu **voeux;
 
     int _raw_scores[NB_VOEUX];
     int _raw_voeux[NB_VOEUX];
@@ -31,14 +31,14 @@ struct eleve
  * @param voeux Les voeux de l'élève dans un tableau de taille NB_VOEUX
  * @return Un pointeur vers l'élève créé
  */
-struct eleve *eleve_new(int id, int scores[NB_VOEUX], int voeux[NB_VOEUX], struct lycee **lycees);
+struct eleve *eleve_new(int id, int scores[NB_VOEUX], int voeux[NB_VOEUX]);
 
 /**
  * @brief la liste des élèves dans un fichier
  * @param filename Le nom du fichier à lire
  * @return Un tableau de pointeurs vers les élèves lus
  */
-struct eleve **lecture_eleves(char *filename, struct lycee **lycees);
+struct eleve **lecture_eleves(char *filename);
 
 /**
  * @brief Libère la mémoire allouée pour un élève
@@ -66,8 +66,6 @@ void place_eleves(struct eleve **eleves, struct lycee **lycees);
  * @param eleve L'élève
  * @param lycee Le lycée
  */
-void supprime_voeux(struct eleve *eleve, struct lycee *lycee);
-
-void inverse_voeux(struct eleve **eleves);
+bool supprime_voeux_after(struct eleve *eleve, struct lycee *lycee);
 
 #endif // _ELEVE_H
