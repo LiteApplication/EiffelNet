@@ -19,7 +19,6 @@ struct voeu *voeu_new(int score, struct eleve *eleve, struct lycee *lycee)
 struct lvoeux *create_lvoeux(struct voeu *voeu)
 {
     struct lvoeux *lvoeux = malloc(sizeof(struct lvoeux));
-    printf("slt");
     lvoeux->voeu = voeu;
     lvoeux->prec = NULL;
     lvoeux->suiv = NULL;

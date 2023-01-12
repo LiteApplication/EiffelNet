@@ -111,8 +111,6 @@ bool supprime_eleve(struct eleve *eleve, struct lycee *lycee)
                 prec->suiv = lvoeux->suiv;
                 prec->suiv->prec = prec;
             }
-            free(lvoeux->voeu);
-            free(lvoeux);
             return true;
         }
         prec = lvoeux;

@@ -13,7 +13,7 @@ int main(void)
 
 	struct voeu *voeu = malloc(sizeof(voeu));
 	create_lvoeux(voeu);
-	printf("\n\n");
+	/*printf("\n\n");
 	for (int i = 0; i < NB_LYCEES; i++)
 	{
 		struct lycee *lycee = lycees[i];
@@ -24,19 +24,20 @@ int main(void)
 			printf("\t%d\n", voeu->voeu->score);
 			voeu = voeu->suiv;
 		}
-	}
+	}*/
 
 	marea_algorithm(lycees);
 	for (int i = 0; i < NB_LYCEES; i++)
 	{
 		struct lycee *lycee = lycees[i];
-		printf("- %d\n", lycee->id);
+		printf("%d ", lycee->id);
 		struct lvoeux *voeu = lycee->candidats;
 		while (voeu != NULL)
 		{
-			printf("\t%d\n", voeu->voeu->eleve->id);
+			printf("%d(%d) ", voeu->voeu->eleve->id, voeu->voeu->score);
 			voeu = voeu->suiv;
 		}
+		printf("\n");
 	}
 
 	return EXIT_SUCCESS;

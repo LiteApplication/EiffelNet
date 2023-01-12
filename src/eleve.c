@@ -16,11 +16,20 @@ struct eleve *eleve_new(int id, int scores[NB_VOEUX], int voeux[NB_VOEUX])
         return NULL;
     }
     eleve->id = id;
+    eleve->demandes = NULL;
+
     for (int i = 0; i < NB_VOEUX; i++)
     {
         eleve->_raw_scores[i] = scores[i];
         eleve->_raw_voeux[i] = voeux[i];
     }
+
+    for (int i = 0; i < NB_VOEUX; i++)
+    {
+        eleve->emaillon[i] = NULL;
+        eleve->lmaillon[i] = NULL;
+    }
+
     return eleve;
 }
 
@@ -81,6 +90,8 @@ void free_eleves(struct eleve **eleves, int nb_eleves)
 
 void affecte_eleve(struct eleve *eleve, struct lycee **lycees, int position)
 {
+
+    // On trouve le lycée
     struct lycee *lycee_eleve = find_lycee(eleve->_raw_voeux[position], lycees);
     if (lycee_eleve == NULL)
     {
@@ -88,8 +99,8 @@ void affecte_eleve(struct eleve *eleve, struct lycee **lycees, int position)
         return;
     }
 
+    // Création du voeu
     int score = eleve->_raw_scores[position];
-
     struct voeu *voeu = voeu_new(score, eleve, lycee_eleve);
     if (voeu == NULL)
     {
@@ -97,8 +108,13 @@ void affecte_eleve(struct eleve *eleve, struct lycee **lycees, int position)
         return;
     }
 
-    struct lvoeux *lvoeu_lycee = (struct lvoeux *)malloc(sizeof(struct lvoeux));
-    struct lvoeux *lvoeu_eleve = (struct lvoeux *)malloc(sizeof(struct lvoeux));
+    struct lvoeux *lvoeu_lycee = (struct lvoeux *)malloc(sizeof(struct lvoeux)); // voeu dans la liste du lycée
+    struct lvoeux *lvoeu_eleve = (struct lvoeux *)malloc(sizeof(struct lvoeux)); // voeu dans la liste de l'élève
+
+    lvoeu_eleve->suiv = NULL;
+    lvoeu_lycee->suiv = NULL;
+    lvoeu_eleve->prec = NULL;
+    lvoeu_lycee->prec = NULL;
 
     if (lvoeu_lycee == NULL || lvoeu_eleve == NULL)
     {
@@ -116,22 +132,24 @@ void affecte_eleve(struct eleve *eleve, struct lycee **lycees, int position)
         lvoeu_lycee->suiv = lycee_eleve->candidats;
         lycee_eleve->candidats = lvoeu_lycee;
         lvoeu_lycee->prec = NULL;
-        return;
     }
-
-    struct lvoeux *lvoeux = lycee_eleve->candidats;
-    while (lvoeux->suiv != NULL && lvoeux->suiv->voeu->score > score)
+    else
     {
-        lvoeux = lvoeux->suiv;
+
+        struct lvoeux *lvoeux = lycee_eleve->candidats;
+        while (lvoeux->suiv != NULL && lvoeux->suiv->voeu->score > score)
+        {
+            lvoeux = lvoeux->suiv;
+        }
+        lvoeu_lycee->suiv = lvoeux->suiv;
+        lvoeux->suiv = lvoeu_lycee;
+        lvoeu_lycee->prec = lvoeux;
+        if (lvoeu_lycee->suiv != NULL)
+            lvoeu_lycee->suiv->prec = lvoeu_lycee;
     }
-    lvoeu_lycee->suiv = lvoeux->suiv;
-    lvoeux->suiv = lvoeu_lycee;
-    lvoeu_lycee->prec = lvoeux;
-    if (lvoeu_lycee->suiv != NULL)
-        lvoeu_lycee->suiv->prec = lvoeu_lycee;
 
     // On ajoute le voeu à la liste des voeux de l'élève
-    if (eleve->emaillon[position - 1] != NULL)
+    if (position != 0 && eleve->emaillon[position - 1] != NULL)
     { // Cas rapide, les voeux sont ajoutés dans l'ordre
         eleve->emaillon[position - 1]->suiv = lvoeu_eleve;
         lvoeu_eleve->prec = eleve->emaillon[position - 1];
@@ -198,10 +216,7 @@ bool supprime_voeux_after(struct eleve *eleve, struct lycee *lycee)
 
         // On supprime le voeu de la liste des voeux du lycée
         suppression = supprime_eleve(eleve, lvoeu->voeu->lycee) || suppression;
-
-        // Free stuff
-        free(lvoeu->voeu);
-        free(lvoeu);
+        lvoeu = lvoeu->suiv;
     }
     return suppression;
 }
