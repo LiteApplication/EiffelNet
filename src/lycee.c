@@ -17,7 +17,6 @@ struct lycee *lycee_new(int id, int capacite)
     lycee->id = id;
     lycee->capacite = capacite;
     lycee->candidats = NULL;
-    lycee->candidats_top = NULL;
     return lycee;
 }
 
@@ -54,16 +53,6 @@ struct lycee **lecture_lycees(char *filename)
     }
     fin_lecture(f);
     return lycees;
-}
-
-void free_lycees(struct lycee **lycee, int nb_lycees)
-{
-    for (int i = 0; i < nb_lycees; i++)
-    {
-        free_lvoeux(lycee[i]->candidats);
-        free(lycee[i]);
-    }
-    free(lycee);
 }
 
 struct lycee *find_lycee(int id, struct lycee **lycees)
@@ -111,10 +100,29 @@ bool supprime_eleve(struct eleve *eleve, struct lycee *lycee)
                 prec->suiv->prec = prec;
                 prec->suiv = lvoeux->suiv;
             }
+            free(lvoeux);
+
             return true;
         }
         prec = lvoeux;
         lvoeux = lvoeux->suiv;
     }
     return false;
+}
+
+void free_lycees(struct lycee **lycee, int nb_lycees)
+{
+    for (int i = 0; i < nb_lycees; i++)
+    {
+        struct lvoeux *lvoeux = lycee[i]->candidats;
+        while (lvoeux != NULL)
+        {
+            struct lvoeux *tmp = lvoeux;
+            lvoeux = lvoeux->suiv;
+            // On ne libère pas le voeu car il est déjà libéré dans free_eleves
+            free(tmp);
+        }
+        free(lycee[i]);
+    }
+    free(lycee);
 }

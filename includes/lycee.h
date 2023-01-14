@@ -7,10 +7,8 @@
 struct lycee
 {
     int id;
-    int capacite; // nombre de places
-    int capacite_actuel;
+    int capacite;             // nombre de places
     struct lvoeux *candidats; // liste des voeux sur ce lycee par ordre decroissant de score pour ce lycee
-    struct lvoeux *candidats_top;
 };
 
 struct eleve;

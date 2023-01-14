@@ -69,25 +69,6 @@ struct eleve **lecture_eleves(char *filename)
     return eleves;
 }
 
-void free_eleves(struct eleve **eleves, int nb_eleves)
-{
-    for (int i = 0; i < nb_eleves; i++)
-    {
-        struct eleve *eleve = eleves[i];
-        struct lvoeux *lvoeux = eleve->demandes;
-        struct lvoeux *lvoeux_prev;
-        while (lvoeux != NULL)
-        {
-            lvoeux_prev = lvoeux;
-            lvoeux = lvoeux->suiv;
-            free(lvoeux_prev->voeu);
-            free(lvoeux_prev);
-        }
-        free(eleve);
-    }
-    free(eleves);
-}
-
 void affecte_eleve(struct eleve *eleve, struct lycee **lycees, int position)
 {
 
@@ -216,7 +197,29 @@ bool supprime_voeux_after(struct eleve *eleve, struct lycee *lycee)
 
         // On supprime le voeu de la liste des voeux du lycée
         suppression = supprime_eleve(eleve, lvoeu->voeu->lycee) || suppression;
+
+        struct lvoeux *tmp = lvoeu;
         lvoeu = lvoeu->suiv;
+
+        free(tmp->voeu);
+        free(tmp);
     }
     return suppression;
+}
+
+void free_eleves(struct eleve **eleves, int nb_eleves)
+{
+    for (int i = 0; i < nb_eleves; i++)
+    {
+        struct lvoeux *voeu = eleves[i]->demandes;
+        while (voeu != NULL)
+        {
+            struct lvoeux *tmp = voeu;
+            voeu = voeu->suiv;
+            free(tmp->voeu); // Attention, cela libère aussi le lycée
+            free(tmp);
+        }
+        free(eleves[i]);
+    }
+    free(eleves);
 }
