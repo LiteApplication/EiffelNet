@@ -6,14 +6,6 @@
 #include "voeux.h"
 #include <stdlib.h>
 
-#undef PRETTY_PRINT
-
-struct couple_el
-{
-	struct eleve *eleve;
-	struct lycee *lycee;
-};
-
 /**
  * @brief Algorithme de répartition des élèves dans les lycées (une seule zone)
  * @param eleves: tableau d'élèves

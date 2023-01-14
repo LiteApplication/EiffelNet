@@ -17,7 +17,12 @@ struct lvoeux
     struct lvoeux *prec, *suiv;
 };
 
-struct lvoeux *create_lvoeux(struct voeu *voeu);
+/**
+ * @brief Crée et alloue un maillon de liste de voeux
+ * @param voeu Le voeu du maillon
+ * @return Un pointeur vers le maillon créé
+ */
+struct lvoeux *lvoeux_new(struct voeu *voeu);
 
 /**
  * @brief Crée et alloue un voeu

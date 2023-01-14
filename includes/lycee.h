@@ -15,10 +15,10 @@ struct eleve;
 /**
  * @brief Crée un nouveau lycée
  * @param id L'identifiant du lycée
- * @param effectif L'effectif du lycée
+ * @param capacite La capacité du lycée
  * @return Un pointeur vers le lycée créé
  */
-struct lycee *lycee_new(int id, int effectif);
+struct lycee *lycee_new(int id, int capacite);
 
 /**
  * @brief Lit la liste des lycées dans un fichier
