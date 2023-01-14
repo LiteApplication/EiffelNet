@@ -111,16 +111,16 @@ void affecte_eleve(struct eleve *eleve, struct lycee **lycees, int position)
     struct lvoeux *lvoeu_lycee = (struct lvoeux *)malloc(sizeof(struct lvoeux)); // voeu dans la liste du lycée
     struct lvoeux *lvoeu_eleve = (struct lvoeux *)malloc(sizeof(struct lvoeux)); // voeu dans la liste de l'élève
 
-    lvoeu_eleve->suiv = NULL;
-    lvoeu_lycee->suiv = NULL;
-    lvoeu_eleve->prec = NULL;
-    lvoeu_lycee->prec = NULL;
-
     if (lvoeu_lycee == NULL || lvoeu_eleve == NULL)
     {
         fprintf(stderr, "Erreur lors de l'affectation de l'élève %d au lycée %d\n", eleve->id, eleve->_raw_voeux[position]);
         return;
     }
+    lvoeu_eleve->suiv = NULL;
+    lvoeu_lycee->suiv = NULL;
+    lvoeu_eleve->prec = NULL;
+    lvoeu_lycee->prec = NULL;
+
     lvoeu_lycee->voeu = voeu;
     lvoeu_eleve->voeu = voeu;
     eleve->lmaillon[position] = lvoeu_lycee;

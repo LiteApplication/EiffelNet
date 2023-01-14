@@ -18,11 +18,9 @@ void marea_algorithm(struct lycee **lycees)
 			while (can != NULL && n < capacite)
 			{
 				struct eleve *eleve = can->voeu->eleve;
-				printf("eleve %d, lycee %d\n", eleve->id, lycee->id);
-				bool delete = supprime_voeux_after(eleve, lycee);
-				if (delete)
-					break;
+				change = supprime_voeux_after(eleve, lycee) || change;
 				can = can->suiv;
+				n++;
 			}
 		}
 	}

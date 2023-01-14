@@ -108,8 +108,8 @@ bool supprime_eleve(struct eleve *eleve, struct lycee *lycee)
             }
             else
             {
-                prec->suiv = lvoeux->suiv;
                 prec->suiv->prec = prec;
+                prec->suiv = lvoeux->suiv;
             }
             return true;
         }
