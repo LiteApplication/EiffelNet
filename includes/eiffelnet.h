@@ -6,6 +6,8 @@
 #include "voeux.h"
 #include <stdlib.h>
 
+#undef PRETTY_PRINT
+
 /**
  * @brief Algorithme de répartition des élèves dans les lycées (une seule zone)
  * @param eleves: tableau d'élèves
