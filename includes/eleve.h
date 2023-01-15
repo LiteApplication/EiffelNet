@@ -26,7 +26,7 @@ struct eleve
 /**
  * @brief Crée et alloue un élève
  * @param id L'identifiant de l'élève
- * @param score Le score de l'élève
+ * @param scores Les scores de l'élève
  * @param voeux Les voeux de l'élève dans un tableau de taille NB_VOEUX
  * @return Un pointeur vers l'élève créé
  */
@@ -62,10 +62,11 @@ void place_eleves(struct eleve **eleves, struct lycee **lycees);
 bool supprime_voeux_after(struct eleve *eleve, struct lycee *lycee);
 
 /**
- * @brief Libère la mémoire allouée pour un élève
+ * @brief Libère la mémoire allouée pour les élèves
  * @param eleves Le tableau d'élèves à libérer
  * @param nb_eleves Le nombre d'élèves dans le tableau
  * @note Cette fonction se charge de libérer la mémoire allouée pour les voeux dans la liste des voeux
+ * Le pointeur vers le tableau d'élèves n'est pas libéré.
  */
 void free_eleves(struct eleve **eleves, int nb_eleves);
 

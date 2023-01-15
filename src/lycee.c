@@ -124,5 +124,4 @@ void free_lycees(struct lycee **lycee, int nb_lycees)
         }
         free(lycee[i]);
     }
-    free(lycee);
 }

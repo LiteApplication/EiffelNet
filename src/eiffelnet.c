@@ -4,7 +4,6 @@
 
 void marea_algorithm(struct lycee **lycees)
 {
-	// struct couple_el *el = (struct couple_el *)malloc(sizeof(struct couple_el) * NB_ELEVES);
 	bool change = true;
 	while (change)
 	{

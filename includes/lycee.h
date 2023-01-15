@@ -31,6 +31,7 @@ struct lycee **lecture_lycees(char *filename);
  * @brief Libère la mémoire allouée pour un lycée
  * @param lycees Le tableau de lycées à libérer
  * @param nb_lycees Le nombre de lycées dans le tableau
+ * @note Le pointeur vers le tableau d'élèves n'est pas libéré.
  */
 void free_lycees(struct lycee **lycee, int nb_lycees);
 

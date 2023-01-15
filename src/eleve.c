@@ -214,5 +214,4 @@ void free_eleves(struct eleve **eleves, int nb_eleves)
         }
         free(eleves[i]);
     }
-    free(eleves);
 }

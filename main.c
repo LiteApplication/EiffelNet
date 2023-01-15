@@ -16,7 +16,9 @@ int main(void)
 
 	// Libération de la mémoire
 	free_eleves(eleves, NB_ELEVES);
+	free(eleves);
 	free_lycees(lycees, NB_LYCEES);
+	free(lycees);
 
 	return EXIT_SUCCESS;
 }

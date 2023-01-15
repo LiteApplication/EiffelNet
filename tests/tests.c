@@ -6,99 +6,94 @@
 
 int main()
 {
-    void *test_fail;
-    /*
-    int voeux1[NB_VOEUX] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};
-    int scores1[NB_VOEUX] = {10, 1, 2, 3, 4, 5, 6, 7, 8, 15};
-    int voeux2[NB_VOEUX] = {1, 2, 0, 13, 29, 3, 5, 7, 9, 1};
-    int scores2[NB_VOEUX] = {9, 12, 20, 30, 40, 50, 60, 70, 80, 9};
-    struct eleve *eleve1 = eleve_new(1, scores1, voeux1);
-    struct eleve *eleve2 = eleve_new(2, scores2, voeux2);
-    test_fail = eleve_new(-1, scores1, voeux1);
-    assert(test_fail == NULL);
+    void *fail_ptr; // Pour les tests qui doivent échouer
 
-    assert(eleve1->id == 1);
-    assert(eleve1->_raw_scores[0] == 10);
-    assert(eleve2->id == 2);
-    assert(eleve2->_raw_scores[0] == 20);
-    for (int i = 0; i < NB_VOEUX; i++)
+    // Test 1: Création d'un lycée
+    struct lycee *lycee = lycee_new(1, 100);
+    assert(lycee != NULL);
+    assert(lycee->id == 1);
+    assert(lycee->capacite == 100);
+    assert(lycee->candidats == NULL);
+    fail_ptr = lycee_new(-1, 100);
+    assert(fail_ptr == NULL);
+    fail_ptr = lycee_new(1, -100);
+    assert(fail_ptr == NULL);
+
+    // Test 2: Creation d'un élève
+    int voeux[NB_VOEUX] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int scores[NB_VOEUX] = {100, 90, 80, 70, 60, 50, 40, 30, 20, 10};
+    struct eleve *eleve = eleve_new(1, scores, voeux);
+    assert(eleve != NULL);
+    assert(eleve->id == 1);
+    assert(eleve->demandes == NULL); // Pas encore rempli
+    assert(eleve->lmaillon[0] == NULL);
+    assert(eleve->lmaillon[1] == NULL);
+    assert(eleve->_raw_scores[0] == 100);
+    assert(eleve->_raw_scores[1] == 90);
+    assert(eleve->_raw_voeux[0] == 1);
+    assert(eleve->_raw_voeux[1] == 2);
+    fail_ptr = eleve_new(-1, scores, voeux);
+    assert(fail_ptr == NULL);
+
+    // Preparation : Création d'une liste de lycées
+    struct lycee *lycees[NB_LYCEES];
+    for (int i = 0; i < NB_LYCEES; i++)
     {
-        assert(eleve1->voeux[i] == voeux1[i]);
-        assert(eleve2->voeux[i] == voeux2[i]);
+        lycees[i] = lycee_new(i, i);
+        assert(lycees[i] != NULL);
     }
 
-    struct lycee *lycee1 = lycee_new(1, 1);
-    struct lycee *lycee0 = lycee_new(0, 1);
-
-    struct lycee **lycees = (struct lycee **)malloc(sizeof(struct lycee *) * NB_LYCEES);
-
-    lycees[0] = lycee1; // Force it to be full
-    lycees[1] = lycee0; // They are not in the right order
-
-    for (int i = 2; i < NB_LYCEES; i++)
-        lycees[i] = lycee_new(i, (i + 1));
-
-    test_fail = lycee_new(-1, 10);
-    assert(test_fail == NULL);
-    test_fail = lycee_new(1, -1);
-    assert(test_fail == NULL);
-
-    // Use find_lycee using both fast and slow method (O(n) and O(1))
-    assert(find_lycee(0, lycees) == lycee0);
-    assert(find_lycee(1, lycees) == lycee1);
-    assert(find_lycee(3, lycees) == lycees[3]);
-
-    assert(lycee1->id == 1);
-    assert(lycee1->effectif == 1);
-    assert(lycee1->effectif_actuel == 0);
-    assert(lycees[2]->id == 2);
-    assert(lycees[2]->effectif == 3);
-    assert(lycees[2]->effectif_actuel == 0);
-    affecte_eleve(eleve2, lycees[2]);
-    assert(lycees[2]->eleves[0] == eleve1);
-    assert(lycees[2]->eleves[1] == eleve2);
-    assert(lycees[2]->effectif_actuel == 2);
-    assert(lycee1->eleves[0] == eleve1);
-    assert(lycee1->effectif_actuel == 1);
-
-    lycee1->eleves[0] = NULL;
-    lycee1->effectif_actuel = 0;
-    lycees[2]->eleves[0] = NULL;
-    lycees[2]->eleves[1] = NULL;
-    lycees[2]->effectif_actuel = 0;
-
-    assert(eleve_comparator(&eleve1, &eleve2) == 10);
-    assert(eleve_comparator(&eleve1, &eleve1) == 0);
-
-    // Create a useless list of students
-    struct eleve **eleves = (struct eleve **)malloc(sizeof(struct eleve *) * NB_ELEVES);
-    int voeux[NB_VOEUX] = {0};
-    for (int i = 0; i < NB_ELEVES; i++)
-        eleves[i] = eleve_new(i, 0, voeux);
-
-    free(eleves[1]);
-    free(eleves[2]);
-
-    eleves[1] = eleve1;
-    eleves[2] = eleve2;
-
-
-    struct couple_el *result = oarea_algorithm(eleves, lycees, eleve_comparator);
-
-    assert(lycee1->eleves[0] == eleve2);
-    assert(lycees[2]->eleves[0] == eleve1);
-    assert(lycees[2]->eleves[1] != eleve1 && lycees[2]->eleves[1] != eleve2);
-
+    // Preparation : Création d'une liste d'élèves
+    struct eleve *eleves[NB_ELEVES];
     for (int i = 0; i < NB_ELEVES; i++)
     {
-        if (result[i].eleve == eleve1)
-            assert(result[i].lycee->id == 2);
-        else if (result[i].eleve == eleve2)
-            assert(result[i].lycee->id == 1);
+        eleves[i] = eleve_new(i, scores, voeux);
+        assert(eleves[i] != NULL);
     }
+    // Preparation : conflit entre les élèves 0 et 1 sur le lycée 0
+    eleves[0]->_raw_voeux[0] = 0;
+    eleves[1]->_raw_voeux[0] = 0;
+    eleves[0]->_raw_scores[0] = 100;
+    eleves[1]->_raw_scores[0] = 50;
+    lycees[0]->capacite = 1;
 
-    free_lycees(lycees, NB_LYCEES);
+    place_eleves(eleves, lycees);
+
+    // Test 3: Placement des élèves
+    assert(eleves[0]->demandes != NULL);
+    assert(eleves[0]->demandes->voeu->lycee->id == 0);
+    assert(eleves[0]->demandes->voeu->score == 100);
+    assert(eleves[0]->demandes->suiv != NULL);
+    assert(eleves[1]->demandes != NULL);
+    assert(eleves[1]->demandes->voeu->lycee->id == 0);
+    assert(eleves[1]->demandes->voeu->score == 50);
+    assert(eleves[1]->demandes->suiv != NULL);
+
+    // Test 4: Placement des élèves dans les lycées
+    assert(lycees[0]->capacite == 1);
+    assert(lycees[0]->candidats != NULL);
+    assert(lycees[0]->candidats->voeu->eleve == eleves[0]);
+    assert(lycees[0]->candidats->voeu->score == 100);
+    assert(lycees[0]->candidats->suiv != NULL);
+    assert(lycees[0]->candidats->suiv->voeu->eleve == eleves[1]);
+    assert(lycees[0]->candidats->suiv->voeu->score == 50);
+    assert(lycees[0]->candidats->suiv->suiv == NULL);
+
+    // Test 5: Algorithmes de répartition
+    marea_algorithm(lycees);
+    assert(lycees[0]->candidats->voeu->eleve == eleves[0]);
+    assert(lycees[0]->candidats->voeu->score == 100);
+    assert(eleves[0]->demandes != NULL);
+    assert(eleves[0]->demandes->voeu->lycee == lycees[0]);
+    assert(eleves[0]->demandes->suiv == NULL); // Plus de 2e voeu : accepté dans le premier
+    assert(eleves[1]->demandes != NULL);
+    assert(eleves[1]->demandes->suiv != NULL); // 2e voeu existe encore
+
+    // Nettoyage
     free_eleves(eleves, NB_ELEVES);
-    free(result);
-    */
+    free_lycees(lycees, NB_LYCEES);
+    free_lycees(&lycee, 1);
+    free_eleves(&eleve, 1);
+
+    return 0;
 }
