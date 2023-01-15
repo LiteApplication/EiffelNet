@@ -4,6 +4,9 @@
 #include "eleve.h"
 #include "lycee.h"
 
+/**
+ * @brief Structure représentant un voeu (partagé entre un élève et un lycée)
+ */
 struct voeu
 {
     int score;
@@ -11,6 +14,9 @@ struct voeu
     struct lycee *lycee;
 };
 
+/**
+ * @brief Structure représentant un maillon de liste de voeux
+ */
 struct lvoeux
 {
     struct voeu *voeu;

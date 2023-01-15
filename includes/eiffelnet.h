@@ -9,11 +9,9 @@
 #undef PRETTY_PRINT
 
 /**
- * @brief Algorithme de répartition des élèves dans les lycées (une seule zone)
- * @param eleves: tableau d'élèves
- * @param nb_eleves: nombre d'élèves dans le tableau
+ * @brief Algorithme de répartition des élèves dans les lycées (plusieurs zones)
  * @param lycees: tableau de lycées
- * @param nb_lycees: nombre de lycées dans le tableau
+ * @note La répartition se fait "en place" dans les lycées
  */
 void marea_algorithm(struct lycee **lycees);
 

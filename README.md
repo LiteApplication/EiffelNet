@@ -29,7 +29,7 @@ make run # Compile et exécute le programme
 make valgrind # Execute avec valgrind
 ./eiffelnet # Execute directement
 ```
-Pour générer les fichiers `lycees.csv`, `voeux.csv` et `voeux_zones.csv`, il faut éxécuter : (tout en étant dans le dossier build)
+Pour générer les fichiers `lycees.csv`, `voeux.csv` et `voeux_zones.csv`, il faut exécuter : (tout en étant dans le dossier build)
 ```bash
 make genfiles
 ```
@@ -50,9 +50,9 @@ Lycée <id>
         Eleve <id>:    Score: <score>   Voeux: <liste des voeux> 
         Eleve <id>:    Score: <score>   Voeux: <liste des voeux>
 ```
-Pour choisir le mode d'affichage, il suffit de `#define` ou `#undef` `PRETTY_PRINT` dans le fichier [`includes/eiffelnet.h`](includes/eiffelnet.h#L8) (ligne 8). 
+Pour choisir le mode d'affichage, il suffit de `#define` ou `#undef` `PRETTY_PRINT` dans le fichier [`includes/eiffelnet.h`](includes/eiffelnet.h#L9) (ligne 9). 
 
-## Commentaires
+## Commentaires
 Les commentaires de documentation sont situés dans les fichiers [`headers (.h)`](includes/).
 
 Pour une fonction particulière, une description est indiquée par `@brief <description>`, les paramètres par `@param <name> <description>` et les valeurs de retour par `@return <description>`.
@@ -61,33 +61,39 @@ Pour une fonction particulière, une description est indiquée par `@brief <desc
 ```bash
 .
 ├── CMakeLists.txt # Fichier de configuration de CMake
-├── main.c # Point d'entrée du programme
-├── README.md # Ce fichier
-├── includes # Headers
-│   ├── eiffelnet.h
+├── README.md # Ce fichier
+├── build # Dossier de compilation, créé par CMake
+│   ├── Makefile # Fichier de compilation généré par CMake
+│   ├── eiffelnet # Programme principal, point d'entrée
+│   ├── eiffelnet_test # Programme de test
+│   │   ... # Autres fichiers générés par CMake
+│   └── libefnet.a # Librairie contenant les fonctions du projet
+├── data # Dossier contenant les fichiers de données
+│   ├── lycees.csv # Liste des lycées
+│   ├── voeux.csv # Liste des voeux (pour une zone)
+│   └── voeux_zones.csv # Liste des voeux (algo plusieurs zones)
+├── includes # Dossier contenant les fichiers d'entête
+│   ├── eiffelnet.h 
 │   ├── eleve.h
 │   ├── lecture.h
 │   ├── lycee.h
 │   ├── output.h
-│   └── test.h
-├── src # Sources et fonctions
+│   ├── test.h
+│   └── voeux.h
+├── main.c # Fichier principal, point d'entrée
+├── src # Dossier contenant les fichiers sources
 │   ├── eiffelnet.c
 │   ├── eleve.c
-│   ├── exemple_lecture.c # Fourni par le sujet
-│   ├── exemple_tri.c # Fourni par le sujet
+│   ├── exemple_lecture.c
+│   ├── exemple_tri.c
 │   ├── lecture.c
 │   ├── lycee.c
-│   └── output.c
-├── data # Données d'entrée
-│   ├── lycees.csv
-│   ├── voeux.csv
-│   └── voeux_zones.csv
-├── tests # Fichiers de tests
-│   ├── generate_values.py # Générateur de fichiers d'entrées
-│   └── tests.c # Fichier de tests contenant les assertions, point d'entrée des tests
-└── build # Dossier de compilation
-    ├── eiffelnet # Éxécutable
-    ├── libefnet # Bibliothèque statique contenant les fonctions de l'application
-    ├── eiffelnet_test # Éxécutable pour les tests
-    └── ...
+│   ├── output.c
+│   └── voeux.c
+└── tests # Dossier contenant les fichiers de tests
+    ├── check_functions.py # Teste si les fonctions sont bien définies
+    ├── generate_values.py # Génère des valeurs aléatoires pour les données
+    └── tests.c # Teste les fonctions du projet
+ 
+52 directories, 290 files
 ```
