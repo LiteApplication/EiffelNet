@@ -22,6 +22,13 @@ make test
 ```
 après avoir compilé le programme à l'étape précédente.
 
+CMake exécutera alors 5 tests sur le programme et ses fonctions:
+ 1. Teste si le fichier principal compile sans erreur
+ 2. Teste si le fichier de test compile sans erreur
+ 3. Execute le fichier de test et vérifie que le programme s'exécute sans erreur
+ 4. Teste si les fonctions sont bien définies dans les fichiers sources et headers
+ 5. Teste si la version C du programme produit les mêmes résultats que la version Python
+
 ## Exécution
 Pour exécuter le programme, vous pouvez lancer les commandes suivantes après avoir compilé le programme: (depuis le dossier build)
 ```bash
@@ -33,6 +40,8 @@ Pour générer les fichiers `lycees.csv`, `voeux.csv` et `voeux_zones.csv`, il f
 ```bash
 make genfiles
 ```
+Cela générera les fichiers dans le dossier `data/`.
+
 
 ## Formatage
 Le programme propose deux modes d'affichage : 
@@ -93,6 +102,7 @@ Pour une fonction particulière, une description est indiquée par `@brief <desc
 └── tests # Dossier contenant les fichiers de tests
     ├── check_functions.py # Teste si les fonctions sont bien définies
     ├── generate_values.py # Génère des valeurs aléatoires pour les données
+    ├── eiffelnet.py # Teste la sortie du programme principal
     └── tests.c # Teste les fonctions du projet
  
 52 directories, 290 files
