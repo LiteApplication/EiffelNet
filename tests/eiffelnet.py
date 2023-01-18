@@ -137,7 +137,7 @@ def main():
 
     program_out = tempfile.NamedTemporaryFile(mode="w")
     subprocess.run(
-        [os.path.basename(program_path)],
+        [program_path],
         stdout=program_out,
         cwd=os.path.dirname(program_path),
     )
