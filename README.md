@@ -1,9 +1,6 @@
 # EiffelNet
 Par Martin Wattel et Alexis Rossfelder
 
-## README.md
-Ce fichier peut être visualisé en ligne sur [GitHub](https://gist.github.com/LiteApplication/34ac0ac5dce4024abc6c9fb8b5d7e417)
-
 ## Build
 ```bash
 cmake -B build -S .
