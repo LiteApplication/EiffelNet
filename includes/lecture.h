@@ -23,7 +23,7 @@ void fin_lecture(FILE *f);
  * a NB_VOEUX voeux
  * @return le nombre d'arguments lus, ou EOF si la fin du fichier
  * est atteinte (EOF est défini dans stdio.h)
- * POUR LE PREMIER RENDU
+ * @note POUR LE PREMIER RENDU
  */
 int lecture_eleve_suivant(FILE *f, int *eleve, int *score, int *lycees);
 
@@ -41,7 +41,7 @@ int lecture_lycee_suivant(FILE *f, int *lycee, int *capacite);
  * a NB_VOEUX voeux
  * @return le nombre d'arguments lus, ou EOF si la fin du fichier
  * est atteinte (EOF est défini dans stdio.h)
- * POUR LE DEUXIÈME RENDU
+ * @note POUR LE DEUXIÈME RENDU
  */
 int lecture_eleve_suivant_zones(FILE *f, int *eleve, int *scores, int *lycees);
 #endif
